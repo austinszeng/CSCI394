@@ -1,0 +1,3 @@
+x = input("Enter a negative number: ")
+y = input("Enter a positive number: ")
+print(x % y)

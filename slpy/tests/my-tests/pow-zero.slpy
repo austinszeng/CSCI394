@@ -1,0 +1,2 @@
+x = input("Enter any integer: ")
+print(x**0)
