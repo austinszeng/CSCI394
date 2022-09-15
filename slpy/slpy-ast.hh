@@ -49,6 +49,7 @@ class Mnus;
 class Tmes;
 class IDiv;
 class IMod;
+class Powr;
 class Inpt;
 class IntC;
 class Lkup;
@@ -69,6 +70,7 @@ typedef std::shared_ptr<Mnus> Mnus_ptr;
 typedef std::shared_ptr<Tmes> Tmes_ptr;
 typedef std::shared_ptr<IDiv> IDiv_ptr;
 typedef std::shared_ptr<IMod> IMod_ptr;
+typedef std::shared_ptr<Powr> Powr_ptr;
 //
 typedef std::shared_ptr<Pass> Pass_ptr; 
 typedef std::shared_ptr<Prnt> Prnt_ptr; 
@@ -107,7 +109,6 @@ public:
     Locn where(void) const { return locn; }
 };
 
-
 //
 // class Prgm
 //
@@ -133,6 +134,7 @@ public:
     //
     void run(void) const; // Execute the program by interpreting its code.
     void output(std::ostream& os) const; // Output formatted code.
+    void dump(void) const;
 };
 
 //
@@ -162,6 +164,7 @@ public:
     virtual void exec(Ctxt& ctxt) const = 0;
     virtual void output(std::ostream& os, std::string indent) const = 0;
     virtual void output(std::ostream& os) const;
+    virtual void dump(void) const;
 };
 
 //
@@ -174,6 +177,7 @@ public:
     Asgn(Name x, Expn_ptr e, Locn l) : name {x}, expn {e}, Stmt {l}  { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
+    void dump(void) const;
 };
 
 //
@@ -185,6 +189,7 @@ public:
     Prnt(Expn_ptr e, Locn l) : expn {e}, Stmt {l} { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
+    void dump(void) const;
 };
 
 
@@ -196,6 +201,7 @@ public:
     Pass(Locn l) : Stmt {l} { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
+    void dump(void) const;
 };
 
 //
@@ -210,6 +216,7 @@ public:
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 
@@ -236,6 +243,9 @@ class Expn : public AST {
 public:
     Expn(Locn lo) : AST {lo} { }
     virtual int eval(const Ctxt& ctxt) const = 0;
+    virtual void dump(void) const {
+        std::cout << "NOT IMPLEMENTED" << std::endl;
+    }
 };
 
 //
@@ -249,6 +259,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -262,6 +273,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -275,6 +287,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -288,6 +301,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -301,6 +315,21 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
+};
+
+//
+// Powr - power binary operation's AST node
+//
+class Powr : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    Powr(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : left {lf}, rght {rg}, Expn {lo}  { }
+    int eval(const Ctxt& ctxt) const;
+    void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -312,6 +341,7 @@ public:
     Nmbr(int vl, Locn lo) : valu {vl}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -323,6 +353,7 @@ public:
     Lkup(Name nm, Locn lo) : name {nm}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -334,6 +365,7 @@ public:
     Inpt(std::string pr, Locn lo) : prpt {pr}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 //
@@ -345,6 +377,7 @@ public:
     IntC(Expn_ptr e, Locn l) : expn {e}, Expn {l} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
+    void dump(void) const;
 };
 
 #endif

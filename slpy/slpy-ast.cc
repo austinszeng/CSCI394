@@ -222,6 +222,14 @@ void IMod::output(std::ostream& os) const {
     os << ")";
 }
 
+void Powr::output(std::ostream& os) const {
+    os << "(";
+    left->output(os);
+    os << " ** ";
+    rght->output(os);
+    os << ")";
+}
+
 void Nmbr::output(std::ostream& os) const {
     os << std::to_string(valu);
 }
@@ -240,4 +248,87 @@ void IntC::output(std::ostream& os) const {
     os << ")";
 }
 
+// * * * * *
+//
+// AST::dump
+//
+// - Parse tree representation for SLPY code for each
+// AST subclass
+//
+//
 
+void Prgm::dump(void) const {
+    std::cout << "Prgm" << std::endl;
+}
+
+void Blck::dump(void) const {
+    std::cout << "Blck" << std::endl;
+}
+
+void Stmt::dump(void) const {
+    std::cout << "Stmt" << std::endl;
+}
+
+void Asgn::dump(void) const {
+    std::cout << "Asgn:" << name << std::endl;
+}
+
+void Pass::dump(void) const {
+    std::cout << "Pass" << std::endl;
+}
+
+void Prnt::dump(void) const {
+    std::cout << "Prnt" << std::endl;
+}
+
+void Plus::dump(void) const {
+    std::cout << "Plus" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void Mnus::dump(void) const {
+    std::cout << "Mnus" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void Tmes::dump(void) const {
+    std::cout << "Tmes" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void IDiv::dump(void) const {
+    std::cout << "IDiv" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void IMod::dump(void) const {
+    std::cout << "IMod" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void Powr::dump(void) const {
+    std::cout << "Powr" << std::endl;
+    left->dump();
+    rght->dump();
+}
+
+void Nmbr::dump(void) const {
+    std::cout << std::to_string(valu) << std::endl;
+}
+
+void Lkup::dump(void) const {
+    std::cout << "Lkup:" << name << std::endl;
+}
+
+void Inpt::dump(void) const {
+    std::cout << "Inpt" << prpt << std::endl;;
+}
+
+void IntC::dump(void) const {
+    std::cout << "IntC" << std::endl;
+}

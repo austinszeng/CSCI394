@@ -32,7 +32,7 @@ public:
 // Represents a sequence of Token objects. It can be built by a tokenizer
 // with a series of calls to `append`.
 //
-// After beiung `reset`, it can be parsed (and consumed) with a combination of:
+// After being `reset`, it can be parsed (and consumed) with a combination of:
 //    * advance, eat (the latter looking for a match)
 //    * eat_name, eat_number, eat_string, eat_EOF, eat_EOLN
 // The current token (next to be consumed) can be queried with
@@ -74,7 +74,7 @@ public:
 //
 // Tokenizer
 //
-// Constructs a TokenStream from a SLPy source file using method `lex`.
+// Constructs a TokenStream from a SLPY source file using method `lex`.
 //
 class Tokenizer {
 private:

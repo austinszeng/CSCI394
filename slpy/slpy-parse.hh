@@ -17,6 +17,7 @@
 Expn_ptr parseLeaf(TokenStream& tks);
 Expn_ptr parseMult(TokenStream& tks);
 Expn_ptr parseAddn(TokenStream& tks);
+Expn_ptr parseExpt(TokenStream& tks);
 Expn_ptr parseExpn(TokenStream& tks);
 Stmt_ptr parseStmt(TokenStream& tks);
 Blck_ptr parseBlck(TokenStream& tks);

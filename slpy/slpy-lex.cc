@@ -336,6 +336,7 @@ enum TokenizerState { INIT, // At the start of a line, haven't seen a token.
                       STRG, // Processing a string literal.
                       ESCP, // Processing `\n`, `\t` etc within string literal.
                       SLSH, // Processing `//` token.
+                      ASTR, // Processing '**' token.
                       IDEN_RSRV, // Processing an identifier name.
                       HALT  // Done! Saw EOF.
 };
@@ -390,6 +391,15 @@ void Tokenizer::advance_char(void) {
     }
     curr_char = src_stream.get();
 }
+
+// tz.backup_char()
+//
+// Moves the "cursor" of the file processing to the previous character, updating
+// the location of it.
+//
+// void Tokenizer::backup_char(void) {
+//     //
+// }
 
 // tz.start_fresh_token()
 //
@@ -576,7 +586,6 @@ TokenStream Tokenizer::lex(void) {
                 case '=':
                 case '+':
                 case '-':
-                case '*':
                 case '%':
                 case '(':
                 case ')':
@@ -589,6 +598,19 @@ TokenStream Tokenizer::lex(void) {
                     consume_char();
                     state = SLSH;
                     break;
+
+                case '*':
+                    if (curr_char == '*'){
+                        start_fresh_token();
+                        // Break consume_then_issue into two parts to differentiate * from **
+                        consume_then_issue();
+                        break;
+                    } else {
+                        start_fresh_token();
+                        consume_char();
+                        state = ASTR;
+                        break;
+                    }
                     
                 case -1:
                 //
@@ -610,6 +632,15 @@ TokenStream Tokenizer::lex(void) {
                 state = WTHN;
             } else {
                 bail_with_error("Expected a // operator.");
+            }
+            break;
+
+        case ASTR:
+            if (curr_char == '*') {
+                consume_then_issue();
+                state = WTHN;
+            } else {
+                bail_with_error("Expected a ** operator.");
             }
             break;
 

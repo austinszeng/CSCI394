@@ -9,7 +9,7 @@
 //
 // slpy.cc - a SLPY ("Straight-Line PYthon") interpreter.
 //
-// Usage: ./slpy [--test] [--tokens] [--pprint] <SLPY source file name>
+// Usage: ./slpy [--test] [--tokens] [--pprint] [--dump]<SLPY source file name>
 //
 // This implements a Unix command for processing a SLPY program.  By
 // default, it executes a SLPY program. There are command-line flags
@@ -20,6 +20,8 @@
 //    --tokens - also report the tokens processed by the lexer.
 //
 //    --test - give a simple ERROR message when an error occurs.
+//
+//    --dump - output a textual representation of the parse tree after parsing.
 //
 // The code is heavily reliant upon:
 //
@@ -65,6 +67,7 @@ int main(int argc, char** argv) {
     bool  debug_lex = check_flag(argc,argv,"--tokens");
     bool  pprint    = check_flag(argc,argv,"--pprint");
     bool  testing   = check_flag(argc,argv,"--test");
+    bool  dumpast   = check_flag(argc,argv,"--dump");
     char* filename  = extract_filename(argc,argv);
     
     if (filename) {
@@ -114,9 +117,17 @@ int main(int argc, char** argv) {
             //
             if (pprint) {
                 prgm->output(std::cout);
+            //
+            // If --dump
+            //
+            } else if (dumpast) {
+                // Jim's code :: Revisit specifics
+                // Not sure how typecast ((Prnt *)((void*)&(*...))) works
+                ((Prnt *)((void*)&(*(prgm->main->stmts[0]))))->expn->dump();
             } else {
                 prgm->run();
             }
+
             
         } catch (SlpyError se) {
             
@@ -132,7 +143,7 @@ int main(int argc, char** argv) {
     } else {
         std::cerr << "usage: "
                   << argv[0]
-                  << " [--tokens] [--pprint] [--test] file"
+                  << " [--tokens] [--pprint] [--test] [--dump] file"
                   << std::endl;
     }
 }
