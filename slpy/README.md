@@ -5,3 +5,15 @@
 
 # Ideas for future progress
 - Like output does, use an indent argument to recursively indent parse tree representation for dump
+
+# Current questions
+- In parse.cc, test how parseStmt output a print with comma tokens
+    - How would you add white space between each output? Doesn't parser ignore white spaces?
+- Updt doesn't work and I think it's because of exec method
+        void Updt::exec(Ctxt& ctxt) const {
+            ctxt[name] = expn->eval(ctxt);
+        }
+    - what is ctxt and ctxt[name]? how does it actually know to do the += operator?
+
+# Remember
+- ast.hh, ast.cc, parse.cc (changed back to parseLeaf for parseMult) :: commented out all Powr stuff so I can compile and test other exercises 

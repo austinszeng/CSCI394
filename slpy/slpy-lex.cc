@@ -337,6 +337,7 @@ enum TokenizerState { INIT, // At the start of a line, haven't seen a token.
                       ESCP, // Processing `\n`, `\t` etc within string literal.
                       SLSH, // Processing `//` token.
                       ASTR, // Processing '**' token.
+                      UPDT, // Processing '+=' token.
                       IDEN_RSRV, // Processing an identifier name.
                       HALT  // Done! Saw EOF.
 };
@@ -584,11 +585,11 @@ TokenStream Tokenizer::lex(void) {
                 //
                 // Is it a single-character operator or delimiter?
                 case '=':
-                case '+':
                 case '-':
                 case '%':
                 case '(':
                 case ')':
+                case ',':
                     start_fresh_token();
                     consume_then_issue(); // => Issue it as a token.
                     break;
@@ -600,18 +601,15 @@ TokenStream Tokenizer::lex(void) {
                     break;
 
                 case '*':
-                    if (curr_char == '*'){
-                        start_fresh_token();
-                        // Break consume_then_issue into two parts to differentiate * from **
-                        consume_then_issue();
-                        break;
-                    } else {
-                        start_fresh_token();
-                        consume_char();
-                        state = ASTR;
-                        break;
-                    }
+                    start_fresh_token();
+                    consume_char();
+                    state = ASTR;
                     
+                case '+':
+                    start_fresh_token();
+                    consume_char();
+                    state = UPDT;
+
                 case -1:
                 //
                 // Is it the end of the file?
@@ -638,10 +636,19 @@ TokenStream Tokenizer::lex(void) {
         case ASTR:
             if (curr_char == '*') {
                 consume_then_issue();
-                state = WTHN;
             } else {
-                bail_with_error("Expected a ** operator.");
+                issue_token();
             }
+            state = WTHN;
+            break;
+
+        case UPDT:
+            if (curr_char == '=') {
+                consume_then_issue();
+            } else {
+                issue_token();
+            }
+            state = WTHN;
             break;
 
         case ZERO:

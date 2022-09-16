@@ -49,6 +49,10 @@ void Asgn::exec(Ctxt& ctxt) const {
     ctxt[name] = expn->eval(ctxt);
 }
 
+void Updt::exec(Ctxt& ctxt) const {
+    ctxt[name] = expn->eval(ctxt);
+}
+
 void Pass::exec(Ctxt& ctxt) const {
     // does nothing!
 }
@@ -169,6 +173,13 @@ void Asgn::output(std::ostream& os, std::string indent) const {
     os << std::endl;
 }
 
+void Updt::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << name << " += ";
+    expn->output(os);
+    os << std::endl;
+}
+
 void Pass::output(std::ostream& os, std::string indent) const {
     os << indent << "pass" << std::endl;
 }
@@ -222,13 +233,13 @@ void IMod::output(std::ostream& os) const {
     os << ")";
 }
 
-void Powr::output(std::ostream& os) const {
-    os << "(";
-    left->output(os);
-    os << " ** ";
-    rght->output(os);
-    os << ")";
-}
+// void Powr::output(std::ostream& os) const {
+//     os << "(";
+//     left->output(os);
+//     os << " ** ";
+//     rght->output(os);
+//     os << ")";
+// }
 
 void Nmbr::output(std::ostream& os) const {
     os << std::to_string(valu);
@@ -273,6 +284,10 @@ void Asgn::dump(void) const {
     std::cout << "Asgn:" << name << std::endl;
 }
 
+void Updt::dump(void) const {
+    std::cout << "Updt:" << name << std::endl;
+}
+
 void Pass::dump(void) const {
     std::cout << "Pass" << std::endl;
 }
@@ -311,11 +326,11 @@ void IMod::dump(void) const {
     rght->dump();
 }
 
-void Powr::dump(void) const {
-    std::cout << "Powr" << std::endl;
-    left->dump();
-    rght->dump();
-}
+// void Powr::dump(void) const {
+//     std::cout << "Powr" << std::endl;
+//     left->dump();
+//     rght->dump();
+// }
 
 void Nmbr::dump(void) const {
     std::cout << std::to_string(valu) << std::endl;

@@ -49,7 +49,7 @@ class Mnus;
 class Tmes;
 class IDiv;
 class IMod;
-class Powr;
+// class Powr;
 class Inpt;
 class IntC;
 class Lkup;
@@ -70,7 +70,7 @@ typedef std::shared_ptr<Mnus> Mnus_ptr;
 typedef std::shared_ptr<Tmes> Tmes_ptr;
 typedef std::shared_ptr<IDiv> IDiv_ptr;
 typedef std::shared_ptr<IMod> IMod_ptr;
-typedef std::shared_ptr<Powr> Powr_ptr;
+// typedef std::shared_ptr<Powr> Powr_ptr;
 //
 typedef std::shared_ptr<Pass> Pass_ptr; 
 typedef std::shared_ptr<Prnt> Prnt_ptr; 
@@ -180,13 +180,28 @@ public:
     void dump(void) const;
 };
 
+// 
+// Updt - += update statement
+//
+// <stmt> ::= <name> += <expn>
+class Updt : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    Updt(Name x, Expn_ptr e, Locn l) : name {x}, expn {e}, Stmt {l}  { }
+    void exec(Ctxt& ctxt) const;
+    void output(std::ostream& os, std::string indent) const;
+    void dump(void) const;
+};
+
 //
 // Prnt - print statement AST node
 //
 class Prnt : public Stmt {
 public:
     Expn_ptr expn;
-    Prnt(Expn_ptr e, Locn l) : expn {e}, Stmt {l} { }
+    Prnt(Expn_ptr e, Locn l) : expn {e}, Stmt {l}  { }
+    // Prnt(std::vector<Expn_ptr> Expn_vec = {Expn_ptr e}, Locn l) : expn {Expn_vec[0]}, Stmt {l} { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
     void dump(void) const;
@@ -203,6 +218,7 @@ public:
     void output(std::ostream& os, std::string indent) const;
     void dump(void) const;
 };
+
 
 //
 // class Blck
@@ -318,19 +334,19 @@ public:
     void dump(void) const;
 };
 
-//
-// Powr - power binary operation's AST node
-//
-class Powr : public Expn {
-public:
-    Expn_ptr left;
-    Expn_ptr rght;
-    Powr(Expn_ptr lf, Expn_ptr rg, Locn lo)
-        : left {lf}, rght {rg}, Expn {lo}  { }
-    int eval(const Ctxt& ctxt) const;
-    void output(std::ostream& os) const;
-    void dump(void) const;
-};
+// //
+// // Powr - power binary operation's AST node
+// //
+// class Powr : public Expn {
+// public:
+//     Expn_ptr left;
+//     Expn_ptr rght;
+//     Powr(Expn_ptr lf, Expn_ptr rg, Locn lo)
+//         : left {lf}, rght {rg}, Expn {lo}  { }
+//     int eval(const Ctxt& ctxt) const;
+//     void output(std::ostream& os) const;
+//     void dump(void) const;
+// };
 
 //
 // Nmbr - integer literal AST node

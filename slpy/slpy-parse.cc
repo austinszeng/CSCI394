@@ -57,7 +57,7 @@
 // "cursor" through the stream of tokens. At any moment, the parser makes
 // decisions based on the `current()` token. In most situations a particular
 // token is expected to appear next. In those cases, we use `eat*` methods
-// to check whether the next token matches what we expect, and then advance
+// to check whether the next token matches we expect, and then advance
 // the cursor to the next token. An error is thrown when a mismatch occurs.
 //
 
@@ -153,20 +153,20 @@ Expn_ptr parseMult(TokenStream& tks) {
     //
     // <mult> ::= <expt>  <expt>  ...  <expt>
     //
-    Expn_ptr expn1 = parseExpt(tks);
+    Expn_ptr expn1 = parseLeaf(tks);
     while (tks.at("*") || tks.at("//") || tks.at("%")) {
         Locn locn = tks.locate();
         if (tks.at("*")) {
             tks.eat("*");       
-            Expn_ptr expn2 = parseExpt(tks);
+            Expn_ptr expn2 = parseLeaf(tks);
             expn1 = std::shared_ptr<Tmes> { new Tmes {expn1, expn2, locn} };
         } else if (tks.at("//")) {
             tks.eat("//");       
-            Expn_ptr expn2 = parseExpt(tks);
+            Expn_ptr expn2 = parseLeaf(tks);
             expn1 = std::shared_ptr<IDiv> { new IDiv {expn1, expn2, locn} };
         } else {
             tks.eat("%");       
-            Expn_ptr expn2 = parseExpt(tks);
+            Expn_ptr expn2 = parseLeaf(tks);
             expn1 = std::shared_ptr<IMod> { new IMod {expn1, expn2, locn} };
         }
     }
@@ -174,25 +174,22 @@ Expn_ptr parseMult(TokenStream& tks) {
     return expn1;
 }
 
-//
-// parseExpt - parse tokens that form a series of powers of sub-expressions.
-//
-// Modifies the TokenStream `tks` by consuming token and advancing its cursor.
-//
-Expn_ptr parseExpt(TokenStream& tks) {
-    //
-    // <expt> ::= <leaf> ** <leaf> ** ... ** <leaf>
-    //
-    Expn_ptr expn1 = parseLeaf(tks);
-    while (tks.at("**")) {
-        Locn locn = tks.locate();
-        tks.eat("**");       
-        Expn_ptr expn2 = parseLeaf(tks);
-        expn1 = std::shared_ptr<Powr> { new Powr {expn1, expn2, locn} };
-    }
+// //
+// // parseExpt - parse tokens that form a series of powers of sub-expressions.
+// //
+// // Modifies the TokenStream `tks` by consuming token and advancing its cursor.
+// //
+// Expn_ptr parseExpt(TokenStream& tks) {
+//     Expn_ptr expn1 = parseLeaf(tks);
+//     while (tks.at("**")) {
+//         Locn locn = tks.locate();
+//         tks.eat("**");       
+//         Expn_ptr expn2 = parseLeaf(tks);
+//         expn1 = std::shared_ptr<Powr> { new Powr {expn1, expn2, locn} };
+//     }
 
-    return expn1;
-}
+//     return expn1;
+// }
 
 //
 // parseAddn - parse tokens that form a series of additions and subtractions
@@ -249,6 +246,17 @@ Stmt_ptr parseStmt(TokenStream& tks) {
         tks.eat("print");
         tks.eat("(");
         Expn_ptr expn = parseExpn(tks);
+
+        // // Check if there is a "," token
+        // while(current().token != ")"){
+        //     if(current().token == ","){
+        //         tks.eat(",")
+        //         Expn_ptr expn = parseExpn(tks);
+        //     } else {
+        //         Expn_ptr expn = parseExpn(tks);
+        //     }
+        // }
+
         tks.eat(")");
 
         return std::shared_ptr<Prnt> { new Prnt { expn, locn } };
