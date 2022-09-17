@@ -161,7 +161,8 @@ void TokenStream::advance(void) {
 // Returns true if the next token's string matches s.
 //
 bool TokenStream::at(std::string match) {
-    return (current().token == match);
+    int result = (current().token == match);
+    return (result);
 }
 
 // b = ts.at_name()
@@ -604,11 +605,13 @@ TokenStream Tokenizer::lex(void) {
                     start_fresh_token();
                     consume_char();
                     state = ASTR;
+                    break;
                     
                 case '+':
                     start_fresh_token();
                     consume_char();
                     state = UPDT;
+                    break;
 
                 case -1:
                 //

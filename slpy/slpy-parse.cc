@@ -153,20 +153,20 @@ Expn_ptr parseMult(TokenStream& tks) {
     //
     // <mult> ::= <expt>  <expt>  ...  <expt>
     //
-    Expn_ptr expn1 = parseLeaf(tks);
+    Expn_ptr expn1 = parseExpt(tks);
     while (tks.at("*") || tks.at("//") || tks.at("%")) {
         Locn locn = tks.locate();
         if (tks.at("*")) {
             tks.eat("*");       
-            Expn_ptr expn2 = parseLeaf(tks);
+            Expn_ptr expn2 = parseExpt(tks);
             expn1 = std::shared_ptr<Tmes> { new Tmes {expn1, expn2, locn} };
         } else if (tks.at("//")) {
             tks.eat("//");       
-            Expn_ptr expn2 = parseLeaf(tks);
+            Expn_ptr expn2 = parseExpt(tks);
             expn1 = std::shared_ptr<IDiv> { new IDiv {expn1, expn2, locn} };
         } else {
             tks.eat("%");       
-            Expn_ptr expn2 = parseLeaf(tks);
+            Expn_ptr expn2 = parseExpt(tks);
             expn1 = std::shared_ptr<IMod> { new IMod {expn1, expn2, locn} };
         }
     }
@@ -174,22 +174,21 @@ Expn_ptr parseMult(TokenStream& tks) {
     return expn1;
 }
 
-// //
-// // parseExpt - parse tokens that form a series of powers of sub-expressions.
-// //
-// // Modifies the TokenStream `tks` by consuming token and advancing its cursor.
-// //
-// Expn_ptr parseExpt(TokenStream& tks) {
-//     Expn_ptr expn1 = parseLeaf(tks);
-//     while (tks.at("**")) {
-//         Locn locn = tks.locate();
-//         tks.eat("**");       
-//         Expn_ptr expn2 = parseLeaf(tks);
-//         expn1 = std::shared_ptr<Powr> { new Powr {expn1, expn2, locn} };
-//     }
-
-//     return expn1;
-// }
+//
+// parseExpt - parse tokens that form a series of powers of sub-expressions.
+//
+// Modifies the TokenStream `tks` by consuming token and advancing its cursor.
+//
+Expn_ptr parseExpt(TokenStream& tks) {
+    Expn_ptr expn1 = parseLeaf(tks);
+    while (tks.at("**")) {
+        Locn locn = tks.locate();
+        tks.eat("**");  
+        Expn_ptr expn2 = parseLeaf(tks);
+        expn1 = std::shared_ptr<Powr> { new Powr {expn1, expn2, locn} };
+    }
+    return expn1;
+}
 
 //
 // parseAddn - parse tokens that form a series of additions and subtractions

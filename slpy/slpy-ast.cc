@@ -106,6 +106,23 @@ int IMod::eval(const Ctxt& ctxt) const {
     } 
 }
 
+int Powr::eval(const Ctxt& ctxt) const {
+    int lv = left->eval(ctxt);
+    int rv = rght->eval(ctxt);
+    int total = lv;
+    if (rv == 0){
+        return 1;
+    } else if (rv == 1){
+        return lv;
+    } else {
+        while (rv != 1){
+            total = total * lv;
+            rv = rv - 1;
+        }
+    }
+    return (total);
+}
+
 int Nmbr::eval(const Ctxt& ctxt) const {
     return valu;
 }
@@ -233,13 +250,13 @@ void IMod::output(std::ostream& os) const {
     os << ")";
 }
 
-// void Powr::output(std::ostream& os) const {
-//     os << "(";
-//     left->output(os);
-//     os << " ** ";
-//     rght->output(os);
-//     os << ")";
-// }
+void Powr::output(std::ostream& os) const {
+    os << "(";
+    left->output(os);
+    os << " ** ";
+    rght->output(os);
+    os << ")";
+}
 
 void Nmbr::output(std::ostream& os) const {
     os << std::to_string(valu);
@@ -326,11 +343,11 @@ void IMod::dump(void) const {
     rght->dump();
 }
 
-// void Powr::dump(void) const {
-//     std::cout << "Powr" << std::endl;
-//     left->dump();
-//     rght->dump();
-// }
+void Powr::dump(void) const {
+    std::cout << "Powr" << std::endl;
+    left->dump();
+    rght->dump();
+}
 
 void Nmbr::dump(void) const {
     std::cout << std::to_string(valu) << std::endl;
