@@ -3,7 +3,7 @@
 ## Progress Report
 Implemented 
 - --dump, 
-    - 
+    - not yet working
 - right-associative power (**) operator, 
     - Extended lex method in slpy-lex.cc to "tokenize" ** as a token 
     - Created a Powr class, which is a subclass of Expn, with eval, output, and dump methods in slpy-ast.*

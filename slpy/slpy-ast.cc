@@ -210,7 +210,10 @@ void Prnt::output(std::ostream& os, std::string indent) const {
     os << "(";
     for (Expn_ptr e : expns) {
         e->output(os);
+        os << ", ";
     }
+    os << '\b';  //Cursor moves 1 position backwards
+    os << '\b';
     os << ")";
     os << std::endl;
 }
@@ -292,19 +295,24 @@ void IntC::output(std::ostream& os) const {
 
 void Prgm::dump(void) const {
     std::cout << "Prgm" << std::endl;
-    std::cout << "    " << std::endl;
+    main->dump();
 }
 
 void Blck::dump(void) const {
     std::cout << "Blck" << std::endl;
+    for (Stmt_ptr s : stmts) {
+        s->dump();
+    }
 }
 
 void Stmt::dump(void) const {
     std::cout << "Stmt" << std::endl;
+    dump();
 }
 
 void Asgn::dump(void) const {
     std::cout << "Asgn:" << name << std::endl;
+    expn->dump();
 }
 
 void Updt::dump(void) const {
@@ -317,6 +325,9 @@ void Pass::dump(void) const {
 
 void Prnt::dump(void) const {
     std::cout << "Prnt" << std::endl;
+    for (Expn_ptr e : expns) {
+        e->dump();
+    }
 }
 
 void Plus::dump(void) const {
@@ -356,6 +367,7 @@ void Powr::dump(void) const {
 }
 
 void Nmbr::dump(void) const {
+    std::cout << "Nmbr" << std::endl;
     std::cout << std::to_string(valu) << std::endl;
 }
 
@@ -369,4 +381,5 @@ void Inpt::dump(void) const {
 
 void IntC::dump(void) const {
     std::cout << "IntC" << std::endl;
+    expn->dump();
 }
