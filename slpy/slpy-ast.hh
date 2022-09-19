@@ -42,6 +42,7 @@ class Stmt;
 class Pass;
 class Asgn;
 class Prnt;
+class Updt;
 //
 class Expn;
 class Plus;
@@ -75,6 +76,7 @@ typedef std::shared_ptr<Powr> Powr_ptr;
 typedef std::shared_ptr<Pass> Pass_ptr; 
 typedef std::shared_ptr<Prnt> Prnt_ptr; 
 typedef std::shared_ptr<Asgn> Asgn_ptr;
+typedef std::shared_ptr<Updt> Updt_ptr; 
 //
 typedef std::shared_ptr<Prgm> Prgm_ptr; 
 typedef std::shared_ptr<Blck> Blck_ptr; 
@@ -199,9 +201,8 @@ public:
 //
 class Prnt : public Stmt {
 public:
-    Expn_ptr expn;
-    Prnt(Expn_ptr e, Locn l) : expn {e}, Stmt {l}  { }
-    // Prnt(std::vector<Expn_ptr> Expn_vec = {Expn_ptr e}, Locn l) : expn {Expn_vec[0]}, Stmt {l} { }
+    Expn_vec expns;
+    Prnt(Expn_vec e, Locn l) : expns {e}, Stmt {l}  { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
     void dump(void) const;

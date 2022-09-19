@@ -50,7 +50,7 @@ void Asgn::exec(Ctxt& ctxt) const {
 }
 
 void Updt::exec(Ctxt& ctxt) const {
-    ctxt[name] = expn->eval(ctxt);
+    ctxt[name] = ctxt[name] + expn->eval(ctxt);
 }
 
 void Pass::exec(Ctxt& ctxt) const {
@@ -58,7 +58,10 @@ void Pass::exec(Ctxt& ctxt) const {
 }
   
 void Prnt::exec(Ctxt& ctxt) const {
-    std::cout << expn->eval(ctxt) << std::endl;
+    for (Expn_ptr e : expns) {
+        std::cout << e->eval(ctxt) << " ";
+    }
+    std::cout << std::endl;
 }
 
 //
@@ -205,7 +208,9 @@ void Prnt::output(std::ostream& os, std::string indent) const {
     os << indent;
     os << "print";
     os << "(";
-    expn->output(os);
+    for (Expn_ptr e : expns) {
+        e->output(os);
+    }
     os << ")";
     os << std::endl;
 }
@@ -287,6 +292,7 @@ void IntC::output(std::ostream& os) const {
 
 void Prgm::dump(void) const {
     std::cout << "Prgm" << std::endl;
+    std::cout << "    " << std::endl;
 }
 
 void Blck::dump(void) const {

@@ -102,6 +102,7 @@ int main(int argc, char** argv) {
             tks.reset();
             Prgm_ptr prgm = parse(tks);
 
+
             //
             // Make sure the whole source code was parsed.
             //
@@ -120,10 +121,12 @@ int main(int argc, char** argv) {
             //
             // If --dump
             //
+            // } else if (dumpast) {
+            //     // Jim's code :: Revisit specifics
+            //     // Not sure how typecast ((Prnt *)((void*)&(*...))) works
+            //     ((Prnt *)((void*)&(*(prgm->main->stmts[0]))))->expn->dump();
             } else if (dumpast) {
-                // Jim's code :: Revisit specifics
-                // Not sure how typecast ((Prnt *)((void*)&(*...))) works
-                ((Prnt *)((void*)&(*(prgm->main->stmts[0]))))->expn->dump();
+                prgm->dump();
             } else {
                 prgm->run();
             }

@@ -184,7 +184,8 @@ Expn_ptr parseExpt(TokenStream& tks) {
     while (tks.at("**")) {
         Locn locn = tks.locate();
         tks.eat("**");  
-        Expn_ptr expn2 = parseLeaf(tks);
+        // Right-associative recursion
+        Expn_ptr expn2 = parseExpt(tks);
         expn1 = std::shared_ptr<Powr> { new Powr {expn1, expn2, locn} };
     }
     return expn1;
@@ -241,27 +242,23 @@ Stmt_ptr parseStmt(TokenStream& tks) {
         //
         // <stmt> ::= print ( <expn> )
         //
+        Expn_vec expns { };
         Locn locn = tks.locate();
         tks.eat("print");
         tks.eat("(");
-        Expn_ptr expn = parseExpn(tks);
-
-        // // Check if there is a "," token
-        // while(current().token != ")"){
-        //     if(current().token == ","){
-        //         tks.eat(",")
-        //         Expn_ptr expn = parseExpn(tks);
-        //     } else {
-        //         Expn_ptr expn = parseExpn(tks);
-        //     }
-        // }
-
+        do {
+            Expn_ptr expn = parseExpn(tks);
+            expns.push_back(expn);
+            if (tks.at(",")) {
+                tks.eat(",");
+            } else {
+                break;
+            }
+        } while (!tks.at_EOF());
         tks.eat(")");
 
-        return std::shared_ptr<Prnt> { new Prnt { expn, locn } };
-
+        return std::shared_ptr<Prnt> { new Prnt { expns, locn } };
     } else if (tks.at("pass")) {
-
         //
         // <stmt> ::= pass
         //
@@ -269,18 +266,27 @@ Stmt_ptr parseStmt(TokenStream& tks) {
         tks.eat("pass");
 
         return std::shared_ptr<Pass> { new Pass { locn } };
-
     } else {
-        
+        std::string name = tks.eat_name();
+        //
+        // <stmt> ::= +=
+        //
+        if (tks.at("+=")) {
+            Locn locn = tks.locate();
+            tks.eat("+=");
+            Expn_ptr expn = parseExpn(tks);
+
+            return std::shared_ptr<Updt> { new Updt { name, expn, locn } };
         //
         // <stmt> ::= <name> = <expn>
         //
-        std::string name = tks.eat_name();
-        Locn locn = tks.locate();
-        tks.eat("=");
-        Expn_ptr expn = parseExpn(tks);
+        } else {
+            Locn locn = tks.locate();
+            tks.eat("=");
+            Expn_ptr expn = parseExpn(tks);
 
-        return std::shared_ptr<Asgn> { new Asgn { name, expn, locn } };
+            return std::shared_ptr<Asgn> { new Asgn { name, expn, locn } };
+        }
     }
 }
 
