@@ -136,7 +136,7 @@ public:
     //
     void run(void) const; // Execute the program by interpreting its code.
     void output(std::ostream& os) const; // Output formatted code.
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -166,7 +166,7 @@ public:
     virtual void exec(Ctxt& ctxt) const = 0;
     virtual void output(std::ostream& os, std::string indent) const = 0;
     virtual void output(std::ostream& os) const;
-    virtual void dump(void) const;
+    virtual void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -179,7 +179,7 @@ public:
     Asgn(Name x, Expn_ptr e, Locn l) : name {x}, expn {e}, Stmt {l}  { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 // 
@@ -193,7 +193,7 @@ public:
     Updt(Name x, Expn_ptr e, Locn l) : name {x}, expn {e}, Stmt {l}  { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -205,7 +205,7 @@ public:
     Prnt(Expn_vec e, Locn l) : expns {e}, Stmt {l}  { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 
@@ -217,7 +217,7 @@ public:
     Pass(Locn l) : Stmt {l} { }
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 
@@ -233,7 +233,7 @@ public:
     void exec(Ctxt& ctxt) const;
     void output(std::ostream& os, std::string indent) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 
@@ -260,7 +260,7 @@ class Expn : public AST {
 public:
     Expn(Locn lo) : AST {lo} { }
     virtual int eval(const Ctxt& ctxt) const = 0;
-    virtual void dump(void) const {
+    virtual void dump(std::ostream& os, std::string indent) const {
         std::cout << "NOT IMPLEMENTED" << std::endl;
     }
 };
@@ -276,7 +276,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -290,7 +290,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -304,7 +304,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -318,7 +318,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -332,7 +332,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -346,7 +346,7 @@ public:
         : left {lf}, rght {rg}, Expn {lo}  { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -358,7 +358,7 @@ public:
     Nmbr(int vl, Locn lo) : valu {vl}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -370,7 +370,7 @@ public:
     Lkup(Name nm, Locn lo) : name {nm}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -382,7 +382,7 @@ public:
     Inpt(std::string pr, Locn lo) : prpt {pr}, Expn {lo} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 //
@@ -394,7 +394,7 @@ public:
     IntC(Expn_ptr e, Locn l) : expn {e}, Expn {l} { }
     int eval(const Ctxt& ctxt) const;
     void output(std::ostream& os) const;
-    void dump(void) const;
+    void dump(std::ostream& os, std::string indent) const;
 };
 
 #endif

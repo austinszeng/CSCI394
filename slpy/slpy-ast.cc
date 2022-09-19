@@ -293,93 +293,97 @@ void IntC::output(std::ostream& os) const {
 //
 //
 
-void Prgm::dump(void) const {
-    std::cout << "Prgm" << std::endl;
-    main->dump();
+void Prgm::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Prgm" << std::endl;
+    main->dump(os, indent + "    ");
 }
 
-void Blck::dump(void) const {
-    std::cout << "Blck" << std::endl;
+void Blck::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Blck" << std::endl;
     for (Stmt_ptr s : stmts) {
-        s->dump();
+        s->dump(os, indent + "    ");
     }
 }
 
-void Stmt::dump(void) const {
-    std::cout << "Stmt" << std::endl;
-    dump();
+void Stmt::dump(std::ostream& os, std::string indent) const {
+    os << "Stmt" << std::endl;
+    dump(os, "");
 }
 
-void Asgn::dump(void) const {
-    std::cout << "Asgn:" << name << std::endl;
-    expn->dump();
+void Asgn::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Asgn" << std::endl;
+    os << indent + "    " << name << std::endl;
+    expn->dump(os, indent + "    ");
 }
 
-void Updt::dump(void) const {
-    std::cout << "Updt:" << name << std::endl;
+void Updt::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Updt" << std::endl;
+    os << indent + "    " << name << std::endl;
 }
 
-void Pass::dump(void) const {
-    std::cout << "Pass" << std::endl;
+void Pass::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Pass" << std::endl;
 }
 
-void Prnt::dump(void) const {
-    std::cout << "Prnt" << std::endl;
+void Prnt::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Prnt" << std::endl;
     for (Expn_ptr e : expns) {
-        e->dump();
+        e->dump(os, indent + "    ");
     }
 }
 
-void Plus::dump(void) const {
-    std::cout << "Plus" << std::endl;
-    left->dump();
-    rght->dump();
+void Plus::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Plus" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void Mnus::dump(void) const {
-    std::cout << "Mnus" << std::endl;
-    left->dump();
-    rght->dump();
+void Mnus::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Mnus" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void Tmes::dump(void) const {
-    std::cout << "Tmes" << std::endl;
-    left->dump();
-    rght->dump();
+void Tmes::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Tmes" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void IDiv::dump(void) const {
-    std::cout << "IDiv" << std::endl;
-    left->dump();
-    rght->dump();
+void IDiv::dump(std::ostream& os, std::string indent) const {
+    os << indent << "IDiv" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void IMod::dump(void) const {
-    std::cout << "IMod" << std::endl;
-    left->dump();
-    rght->dump();
+void IMod::dump(std::ostream& os, std::string indent) const {
+    os << indent << "IMod" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void Powr::dump(void) const {
-    std::cout << "Powr" << std::endl;
-    left->dump();
-    rght->dump();
+void Powr::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Powr" << std::endl;
+    left->dump(os, indent + "    ");
+    rght->dump(os, indent + "    ");
 }
 
-void Nmbr::dump(void) const {
-    std::cout << "Nmbr" << std::endl;
-    std::cout << std::to_string(valu) << std::endl;
+void Nmbr::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Nmbr" << std::endl;
+    os << indent + "    " << std::to_string(valu) << std::endl;
 }
 
-void Lkup::dump(void) const {
-    std::cout << "Lkup:" << name << std::endl;
+void Lkup::dump(std::ostream& os, std::string indent) const {
+    os << indent <<"Lkup" << std::endl;
+    os << indent + "    " << name << std::endl;
 }
 
-void Inpt::dump(void) const {
-    std::cout << "Inpt" << prpt << std::endl;;
+void Inpt::dump(std::ostream& os, std::string indent) const {
+    os << indent << "Inpt" << std::endl;
+    os << indent + "    " << "\"" << prpt << "\"" << std::endl;
 }
 
-void IntC::dump(void) const {
-    std::cout << "IntC" << std::endl;
-    expn->dump();
+void IntC::dump(std::ostream& os, std::string indent) const {
+    os << indent << "IntC" << std::endl;
+    expn->dump(os, indent + "    ");
 }

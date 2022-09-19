@@ -3,7 +3,12 @@
 ## Progress Report
 Implemented 
 - --dump, 
-    - not yet working
+    - Wrote a dump method for each of the AST node types
+    - Output to standard out a textual representation of the parse tree for the SLPY program after it has been parsed
+    - Uses recursion to indent according to its depth, starting at an index of 0
+    - Called using --dump flag
+    - Modified slpy.cc to be able to indentify --dump flag
+    - Modified slpy-ast.* by writing a dump method for each AST type node that takes in a std::ostream& os and std::string indent
 - right-associative power (**) operator, 
     - Extended lex method in slpy-lex.cc to "tokenize" ** as a token 
     - Created a Powr class, which is a subclass of Expn, with eval, output, and dump methods in slpy-ast.*
@@ -18,6 +23,3 @@ Implemented
     - Extended lexical analyzer to recognize "+=" tokens in slpy-lex.cc
     - Created a new Stmt subclass, Updt, which closely follows Asgn's class definitions and methods, slightly modifying the exec method, in slpy-ast.*
     - Extended parseStmt method in slpy-parse.cc to differentiate the Asgn (=) and Updt (+=) operators
-
-# Ideas for future progress
-- Like output does, use an indent argument to recursively indent parse tree representation for dump

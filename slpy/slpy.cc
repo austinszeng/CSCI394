@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
             //     // Not sure how typecast ((Prnt *)((void*)&(*...))) works
             //     ((Prnt *)((void*)&(*(prgm->main->stmts[0]))))->expn->dump();
             } else if (dumpast) {
-                prgm->dump();
+                prgm->dump(std::cout, "");
             } else {
                 prgm->run();
             }
