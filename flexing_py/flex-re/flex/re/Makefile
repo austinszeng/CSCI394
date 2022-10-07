@@ -1,4 +1,16 @@
-all: oh-one-one no-ab calculator
+all: oh-one-one no-ab calculator abc-alphabetical no-oh-one-one even-oh-one
+
+even-oh-one: even-oh-one.ll
+	flex -o even-oh-one.cc even-oh-one.ll
+	g++ -std=c++17 -g -o even-oh-one even-oh-one.cc
+
+no-oh-one-one: no-oh-one-one.ll
+	flex -o no-oh-one-one.cc no-oh-one-one.ll
+	g++ -std=c++17 -g -o no-oh-one-one no-oh-one-one.cc
+
+abc-alphabetical: abc-alphabetical.ll
+	flex -o abc-alphabetical.cc abc-alphabetical.ll
+	g++ -std=c++17 -g -o abc-alphabetical abc-alphabetical.cc
 
 oh-one-one: oh-one-one.ll
 	flex -o oh-one-one.cc oh-one-one.ll
