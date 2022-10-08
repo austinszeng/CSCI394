@@ -1,5 +1,9 @@
 all: oh-one-one balanced end-oh-one-one even-ab balanced-bracks
 
+even-oh-one: even-oh-one.ll FALexer.hh
+	flex -o even-oh-one.cc even-oh-one.ll
+	g++ -std=c++17 -g -o even-oh-one even-oh-one.cc
+
 balanced-bracks: balanced-bracks.ll balanced-bracks.hh
 	flex -o balanced-bracks.cc balanced-bracks.ll
 	g++ -std=c++17 -g -o balanced-bracks balanced-bracks.cc
