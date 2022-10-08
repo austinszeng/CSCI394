@@ -1,6 +1,6 @@
-#line 2 "balanced.cc"
+#line 2 "end-oh-one-one.cc"
 
-#line 4 "balanced.cc"
+#line 4 "end-oh-one-one.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -394,8 +394,8 @@ int yyFlexLexer::yylex()
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 7
-#define YY_END_OF_BUFFER 8
+#define YY_NUM_RULES 12
+#define YY_END_OF_BUFFER 13
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -403,10 +403,11 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[17] =
+static const flex_int16_t yy_accept[26] =
     {   0,
-        0,    0,    0,    0,    8,    6,    4,    4,    1,    2,
-        5,    5,    3,    4,    5,    0
+        0,    0,    0,    0,    0,    0,    0,    0,   13,   11,
+       10,   10,    2,    1,    3,    4,    5,    6,    9,    9,
+        7,    8,   10,    9,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -414,8 +415,8 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
         1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    4,    1,    1,    1,    1,    1,    5,
-        6,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    4,    5,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -424,7 +425,7 @@ static const YY_CHAR yy_ec[256] =
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    4,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -441,40 +442,43 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[7] =
+static const YY_CHAR yy_meta[6] =
     {   0,
-        1,    2,    3,    1,    1,    1
+        1,    2,    3,    1,    1
     } ;
 
-static const flex_int16_t yy_base[21] =
+static const flex_int16_t yy_base[30] =
     {   0,
-        0,    0,    6,    0,   17,   18,    0,    0,   18,   18,
-        0,    0,   18,   18,   18,   18,   13,   13,   11,   11
+        0,    0,    2,    0,    4,    0,    9,    0,   19,   20,
+        0,    0,   20,   20,   20,   20,   20,   20,    0,    0,
+       20,   20,   20,   20,   20,   15,   15,   13,   13
     } ;
 
-static const flex_int16_t yy_def[21] =
+static const flex_int16_t yy_def[30] =
     {   0,
-       16,    1,   16,    3,   16,   16,   17,   18,   16,   16,
-       19,   20,   16,   16,   16,    0,   16,   16,   16,   16
+       25,    1,    1,    3,    3,    5,   25,    7,   25,   25,
+       26,   27,   25,   25,   25,   25,   25,   25,   28,   29,
+       25,   25,   25,   25,    0,   25,   25,   25,   25
     } ;
 
-static const flex_int16_t yy_nxt[25] =
+static const flex_int16_t yy_nxt[26] =
     {   0,
-        6,    7,    8,    6,    9,   10,    6,   11,   12,   13,
-       13,   13,   15,   15,   14,   14,   16,    5,   16,   16,
-       16,   16,   16,   16
+       10,   11,   12,   13,   14,   15,   16,   17,   18,   10,
+       19,   20,   21,   22,   24,   24,   23,   23,   25,    9,
+       25,   25,   25,   25,   25
     } ;
 
-static const flex_int16_t yy_chk[25] =
+static const flex_int16_t yy_chk[26] =
     {   0,
-        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
-        3,    3,   20,   19,   18,   17,    5,   16,   16,   16,
-       16,   16,   16,   16
+        1,    1,    1,    1,    1,    3,    3,    5,    5,    7,
+        7,    7,    7,    7,   29,   28,   27,   26,    9,   25,
+       25,   25,   25,   25,   25
     } ;
 
-static const flex_int16_t yy_rule_linenum[7] =
+static const flex_int16_t yy_rule_linenum[12] =
     {   0,
-       57,   58,   66,   67,   68,   74
+       57,   58,   59,   60,   61,   62,   63,   64,   65,   66,
+       72
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -484,15 +488,15 @@ static const flex_int16_t yy_rule_linenum[7] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "balanced.ll"
-#line 2 "balanced.ll"
+#line 1 "end-oh-one-one.ll"
+#line 2 "end-oh-one-one.ll"
     #include <string>
     #include <iostream>
     #include <fstream>
-    #include "balanced.hh"
+    #include "FALexer.hh"
 
     #undef YY_DECL
-    #define YY_DECL int balanced::Lexer::yylex(void)
+    #define YY_DECL int FALexer::yylex(void)
 
     #define YY_USER_ACTION process(yytext);
     
@@ -507,28 +511,30 @@ static const flex_int16_t yy_rule_linenum[7] =
         return txt.substr(0,ending);
     }
     
-    void balanced::Lexer::process(std::string txt) {
+    void FALexer::process(std::string txt) {
         current = current + txt;
     }
     
-    void balanced::Lexer::report(bool accepted) {
+    void FALexer::report(bool accepted) {
         std::cout << remove_EOLNs(current) << " ";
-        if (accepted && left_open == 0) {
-            std::cout << "YES";
+        if (accepted) {
+            std::cout << " YES";
         } else {   
-            std::cout << "NO";
+            std::cout << " NO";
         }
         std::cout << std::endl;
         current = "";
-        left_open = 0;
         BEGIN(0);
     }
-#line 527 "balanced.cc"
 
-#line 529 "balanced.cc"
+#line 531 "end-oh-one-one.cc"
+
+#line 533 "end-oh-one-one.cc"
 
 #define INITIAL 0
-#define TRAP 1
+#define SAW0 1
+#define SAW01 2
+#define ACCEPT 3
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -718,14 +724,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 51 "balanced.ll"
+#line 51 "end-oh-one-one.ll"
 
 
 
 
 
 
-#line 729 "balanced.cc"
+#line 735 "end-oh-one-one.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -754,13 +760,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 17 )
+				if ( yy_current_state >= 26 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 18 );
+		while ( yy_base[yy_current_state] != 20 );
 
 yy_find_action:
 /* %% [10.0] code to find the action number goes here */
@@ -783,12 +789,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 7 )
+			else if ( yy_act < 12 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 7 )
+			else if ( yy_act == 12 )
 				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
-			else if ( yy_act == 8 )
+			else if ( yy_act == 13 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -806,60 +812,80 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 57 "balanced.ll"
-{ left_open++; BEGIN(INITIAL); }
+#line 57 "end-oh-one-one.ll"
+{ BEGIN(INITIAL); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 58 "balanced.ll"
-{
-    if (left_open == 0) {
-        BEGIN(TRAP);
-    } else {
-        left_open--;
-        BEGIN(INITIAL);
-    }
-}
+#line 58 "end-oh-one-one.ll"
+{ BEGIN(SAW0); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 66 "balanced.ll"
-{ BEGIN(TRAP); }
+#line 59 "end-oh-one-one.ll"
+{ BEGIN(SAW0); }
 	YY_BREAK
 case 4:
-/* rule 4 can match eol */
 YY_RULE_SETUP
-#line 67 "balanced.ll"
-{ report(true); }
+#line 60 "end-oh-one-one.ll"
+{ BEGIN(SAW01); }
 	YY_BREAK
 case 5:
-/* rule 5 can match eol */
 YY_RULE_SETUP
-#line 68 "balanced.ll"
+#line 61 "end-oh-one-one.ll"
+{ BEGIN(SAW0); }
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 62 "end-oh-one-one.ll"
+{ BEGIN(ACCEPT); }
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 63 "end-oh-one-one.ll"
+{ BEGIN(SAW0); }
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 64 "end-oh-one-one.ll"
+{ BEGIN(INITIAL); }
+	YY_BREAK
+case 9:
+/* rule 9 can match eol */
+YY_RULE_SETUP
+#line 65 "end-oh-one-one.ll"
+{ report(true); }
+	YY_BREAK
+case 10:
+/* rule 10 can match eol */
+YY_RULE_SETUP
+#line 66 "end-oh-one-one.ll"
 { report(false); }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(TRAP):
-#line 70 "balanced.ll"
+case YY_STATE_EOF(SAW0):
+case YY_STATE_EOF(SAW01):
+case YY_STATE_EOF(ACCEPT):
+#line 68 "end-oh-one-one.ll"
 {
     return 0;
 }
 	YY_BREAK
-case 6:
+case 11:
 YY_RULE_SETUP
-#line 74 "balanced.ll"
+#line 72 "end-oh-one-one.ll"
 {
     std::string txt { yytext };
     std::cerr << "Unexpected \"" << txt << "\" in input." << std::endl;
     return -1;
 }
 	YY_BREAK
-case 7:
+case 12:
 YY_RULE_SETUP
-#line 80 "balanced.ll"
+#line 78 "end-oh-one-one.ll"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 863 "balanced.cc"
+#line 889 "end-oh-one-one.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1296,7 +1322,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 17 )
+			if ( yy_current_state >= 26 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1329,11 +1355,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 17 )
+		if ( yy_current_state >= 26 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 16);
+	yy_is_jam = (yy_current_state == 25);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1975,13 +2001,13 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 80 "balanced.ll"
+#line 78 "end-oh-one-one.ll"
 
 
 int main(int argc, char** argv) {
     std::string src_name { argv[1] };
     std::ifstream ins { src_name };
-    balanced::Lexer lexer { &ins };
+    FALexer lexer { &ins };
     return lexer.yylex();
 }
 

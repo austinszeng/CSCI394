@@ -1,6 +1,6 @@
-#line 2 "oh-one-one.cc"
+#line 2 "even-ab.cc"
 
-#line 4 "oh-one-one.cc"
+#line 4 "even-ab.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -394,8 +394,8 @@ int yyFlexLexer::yylex()
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 11
-#define YY_END_OF_BUFFER 12
+#define YY_NUM_RULES 17
+#define YY_END_OF_BUFFER 18
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -403,11 +403,12 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[25] =
+static const flex_int16_t yy_accept[33] =
     {   0,
-        0,    0,    0,    0,    0,    0,    0,    0,   12,   10,
-        9,    9,    2,    1,    3,    4,    5,    6,    8,    8,
-        7,    9,    8,    0
+        0,    0,    0,    0,    0,    0,    0,    0,   18,   16,
+        1,    1,    2,    3,    4,    8,    8,    5,    6,    7,
+       15,   15,    9,   10,   11,   12,   13,   14,    1,    8,
+       15,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -416,12 +417,12 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    4,    5,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    4,    5,    6,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -442,42 +443,47 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[6] =
+static const YY_CHAR yy_meta[7] =
     {   0,
-        1,    2,    3,    1,    1
+        1,    2,    3,    1,    1,    1
     } ;
 
-static const flex_int16_t yy_base[29] =
+static const flex_int16_t yy_base[39] =
     {   0,
-        0,    0,    2,    0,    4,    0,    9,    0,   19,   20,
-        0,    0,   20,   20,   20,   20,   20,   20,    0,    0,
-       20,   20,   20,   20,   15,   15,   13,   13
+        0,    0,    6,    0,   12,    0,   15,    0,   28,   29,
+        0,    0,   29,   29,   29,    0,    0,   29,   29,   29,
+        0,    0,   29,   29,   29,   29,   29,   29,   29,   29,
+       29,   29,   24,   24,   22,   22,   20,   20
     } ;
 
-static const flex_int16_t yy_def[29] =
+static const flex_int16_t yy_def[39] =
     {   0,
-       24,    1,    1,    3,    3,    5,   24,    7,   24,   24,
-       25,   26,   24,   24,   24,   24,   24,   24,   27,   28,
-       24,   24,   24,    0,   24,   24,   24,   24
+       32,    1,   32,    3,   32,    5,    5,    7,   32,   32,
+       33,   34,   32,   32,   32,   35,   36,   32,   32,   32,
+       37,   38,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,    0,   32,   32,   32,   32,   32,   32
     } ;
 
-static const flex_int16_t yy_nxt[26] =
+static const flex_int16_t yy_nxt[36] =
     {   0,
-       10,   11,   12,   13,   14,   15,   16,   17,   18,   10,
-       19,   20,   21,   21,   23,   23,   22,   22,   24,    9,
-       24,   24,   24,   24,   24
+       10,   11,   12,   13,   14,   15,   10,   16,   17,   18,
+       19,   20,   10,   21,   22,   23,   24,   25,   26,   27,
+       28,   31,   31,   30,   30,   29,   29,   32,    9,   32,
+       32,   32,   32,   32,   32
     } ;
 
-static const flex_int16_t yy_chk[26] =
+static const flex_int16_t yy_chk[36] =
     {   0,
-        1,    1,    1,    1,    1,    3,    3,    5,    5,    7,
-        7,    7,    7,    7,   28,   27,   26,   25,    9,   24,
-       24,   24,   24,   24,   24
+        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
+        3,    3,    5,    5,    5,    5,    5,    5,    7,    7,
+        7,   38,   37,   36,   35,   34,   33,    9,   32,   32,
+       32,   32,   32,   32,   32
     } ;
 
-static const flex_int16_t yy_rule_linenum[11] =
+static const flex_int16_t yy_rule_linenum[17] =
     {   0,
-       57,   58,   59,   60,   61,   62,   63,   64,   65,   71
+       57,   58,   59,   60,   61,   62,   63,   64,   65,   66,
+       67,   68,   69,   70,   71,   77
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -487,8 +493,8 @@ static const flex_int16_t yy_rule_linenum[11] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "oh-one-one.ll"
-#line 2 "oh-one-one.ll"
+#line 1 "even-ab.ll"
+#line 2 "even-ab.ll"
     #include <string>
     #include <iostream>
     #include <fstream>
@@ -526,13 +532,13 @@ static const flex_int16_t yy_rule_linenum[11] =
         BEGIN(0);
     }
 
-#line 530 "oh-one-one.cc"
+#line 536 "even-ab.cc"
 
-#line 532 "oh-one-one.cc"
+#line 538 "even-ab.cc"
 
 #define INITIAL 0
-#define SAW0 1
-#define SAW01 2
+#define SAWa 1
+#define SAWab 2
 #define ACCEPT 3
 
 #ifndef YY_NO_UNISTD_H
@@ -723,14 +729,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 51 "oh-one-one.ll"
+#line 51 "even-ab.ll"
 
 
 
 
 
 
-#line 734 "oh-one-one.cc"
+#line 740 "even-ab.cc"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -759,13 +765,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 25 )
+				if ( yy_current_state >= 33 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 20 );
+		while ( yy_base[yy_current_state] != 29 );
 
 yy_find_action:
 /* %% [10.0] code to find the action number goes here */
@@ -788,12 +794,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 11 )
+			else if ( yy_act < 17 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 11 )
+			else if ( yy_act == 17 )
 				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
-			else if ( yy_act == 12 )
+			else if ( yy_act == 18 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -810,76 +816,107 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
-#line 57 "oh-one-one.ll"
-{ BEGIN(INITIAL); }
+#line 57 "even-ab.ll"
+{ report(true); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 58 "oh-one-one.ll"
-{ BEGIN(SAW0); }
+#line 58 "even-ab.ll"
+{ BEGIN(SAWa); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 59 "oh-one-one.ll"
-{ BEGIN(SAW0); }
+#line 59 "even-ab.ll"
+{ BEGIN(INITIAL); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 60 "oh-one-one.ll"
-{ BEGIN(SAW01); }
+#line 60 "even-ab.ll"
+{ BEGIN(INITIAL); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 61 "oh-one-one.ll"
-{ BEGIN(SAW0); }
+#line 61 "even-ab.ll"
+{ BEGIN(SAWa); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 62 "oh-one-one.ll"
-{ BEGIN(ACCEPT); }
+#line 62 "even-ab.ll"
+{ BEGIN(SAWab); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 63 "oh-one-one.ll"
-{ BEGIN(ACCEPT); }
+#line 63 "even-ab.ll"
+{ BEGIN(INITIAL); }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 64 "oh-one-one.ll"
+#line 64 "even-ab.ll"
 { report(true); }
 	YY_BREAK
 case 9:
-/* rule 9 can match eol */
 YY_RULE_SETUP
-#line 65 "oh-one-one.ll"
+#line 65 "even-ab.ll"
+{ BEGIN(ACCEPT); }
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 66 "even-ab.ll"
+{ BEGIN(SAWab); }
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
+#line 67 "even-ab.ll"
+{ BEGIN(SAWab); }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 68 "even-ab.ll"
+{ BEGIN(ACCEPT); }
+	YY_BREAK
+case 13:
+YY_RULE_SETUP
+#line 69 "even-ab.ll"
+{ BEGIN(INITIAL); }
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 70 "even-ab.ll"
+{ BEGIN(SAWab); }
+	YY_BREAK
+case 15:
+/* rule 15 can match eol */
+YY_RULE_SETUP
+#line 71 "even-ab.ll"
 { report(false); }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(SAW0):
-case YY_STATE_EOF(SAW01):
+case YY_STATE_EOF(SAWa):
+case YY_STATE_EOF(SAWab):
 case YY_STATE_EOF(ACCEPT):
-#line 67 "oh-one-one.ll"
+#line 73 "even-ab.ll"
 {
     return 0;
 }
 	YY_BREAK
-case 10:
+case 16:
 YY_RULE_SETUP
-#line 71 "oh-one-one.ll"
+#line 77 "even-ab.ll"
 {
     std::string txt { yytext };
     std::cerr << "Unexpected \"" << txt << "\" in input." << std::endl;
     return -1;
 }
 	YY_BREAK
-case 11:
+case 17:
 YY_RULE_SETUP
-#line 77 "oh-one-one.ll"
+#line 83 "even-ab.ll"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 883 "oh-one-one.cc"
+#line 920 "even-ab.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1316,7 +1353,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 25 )
+			if ( yy_current_state >= 33 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1349,11 +1386,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 25 )
+		if ( yy_current_state >= 33 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 24);
+	yy_is_jam = (yy_current_state == 32);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1995,7 +2032,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 77 "oh-one-one.ll"
+#line 83 "even-ab.ll"
 
 
 int main(int argc, char** argv) {
