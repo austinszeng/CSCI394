@@ -50,11 +50,15 @@
 %token               INTC "int"
 %token               STRC "str"
 %token               ASGN "="
+%token               PLEQ "+="
+%token               MNEQ "-="
 %token               PLUS "+"
 %token               MNUS "-"
 %token               TMES "*"
 %token               IDIV "//"
 %token               IMOD "%"
+%token               IAND "and"
+%token               IOR "or"
 %token               LPAR "(" 
 %token               RPAR ")"
 %token               NONE "None"
@@ -74,6 +78,8 @@
 
 %start main;
 
+%precedence IOR
+%precedence IAND
 %left PLUS MNUS;
 %left TMES IMOD IDIV;
     
@@ -115,6 +121,12 @@ stmt:
   NAME ASGN expn EOLN {
       $$ = Asgn_ptr { new Asgn {$1,$3,lexer.locate(@2)} };
   }
+| NAME PLEQ expn EOLN {
+      $$ = Pleq_ptr { new Pleq {$1,$3,lexer.locate(@2)} };
+  }
+| NAME MNEQ expn EOLN {
+      $$ = Mneq_ptr { new Mneq {$1,$3,lexer.locate(@2)} };
+  }
 | PASS EOLN {
       $$ = Pass_ptr { new Pass {lexer.locate(@1)} };
   }
@@ -138,6 +150,12 @@ expn:
   }
 | expn IMOD expn {
       $$ = IMod_ptr { new IMod {$1,$3,lexer.locate(@2)} };
+  }
+| expn IAND expn {
+      $$ = IAnd_ptr { new IAnd {$1,$3,lexer.locate(@2)} };
+  }
+| expn IOR expn {
+      $$ = IOr_ptr { new IOr {$1,$3,lexer.locate(@2)} };
   }
 | NMBR {
       $$ = Ltrl_ptr { new Ltrl {Valu {$1},lexer.locate(@1)} };

@@ -52,6 +52,8 @@ class Stmt;
 class Pass;
 class Asgn;
 class Prnt;
+class Pleq;
+class Mneq;
 //
 class Expn;
 class Plus;
@@ -59,6 +61,8 @@ class Mnus;
 class Tmes;
 class IDiv;
 class IMod;
+class IAnd;
+class IOr;
 class Less;
 class LsEq;
 class Equl;
@@ -85,10 +89,15 @@ typedef std::shared_ptr<Mnus> Mnus_ptr;
 typedef std::shared_ptr<Tmes> Tmes_ptr;
 typedef std::shared_ptr<IDiv> IDiv_ptr;
 typedef std::shared_ptr<IMod> IMod_ptr;
+typedef std::shared_ptr<IAnd> IAnd_ptr;
+typedef std::shared_ptr<IOr> IOr_ptr;
 //
 typedef std::shared_ptr<Pass> Pass_ptr; 
 typedef std::shared_ptr<Prnt> Prnt_ptr; 
 typedef std::shared_ptr<Asgn> Asgn_ptr;
+typedef std::shared_ptr<Pleq> Pleq_ptr;
+typedef std::shared_ptr<Mneq> Mneq_ptr;
+
 //
 typedef std::shared_ptr<Prgm> Prgm_ptr; 
 typedef std::shared_ptr<Defn> Defn_ptr; 
@@ -212,6 +221,34 @@ public:
 // Asgn - assignment statement AST node
 //
 class Asgn : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    Asgn(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~Asgn(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// PlEq - += statement AST Node
+//
+class Pleq : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    Asgn(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~Asgn(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// MnEq - -= statement AST Node
+//
+class Mneq : public Stmt {
 public:
     Name     name;
     Expn_ptr expn;
@@ -364,6 +401,36 @@ public:
     IMod(Expn_ptr lf, Expn_ptr rg, Locn lo)
         : Expn {lo}, left {lf}, rght {rg} { }
     virtual ~IMod(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// IAnd - and logical operation's AST node
+//
+class IAnd : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    IAnd(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : Expn {lo}, left {lf}, rght {rg} { }
+    virtual ~IAnd(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// IOr - or logical operation's AST node
+//
+class IOr : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    IOr(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : Expn {lo}, left {lf}, rght {rg} { }
+    virtual ~IOr(void) = default;
     virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
     virtual void output(std::ostream& os) const;
     virtual void dump(int level = 0) const;

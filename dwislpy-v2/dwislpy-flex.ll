@@ -381,10 +381,26 @@ WSPC    {INDT}
     return issue(token::Token_IDIV,yytext,loc);
 }
 
+<MID_LINE>"+=" {
+    return issue(token::Token_IDIV,yytext,loc);
+}
+
+<MID_LINE>"-=" {
+    return issue(token::Token_IDIV,yytext,loc);
+}
+
 <MID_LINE>"%" {
     return issue(token::Token_IMOD,yytext,loc);
 }
     
+<MID_LINE>and {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
+<MID_LINE>or {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
 <MID_LINE>print {
     return issue(token::Token_PRNT,yytext,loc);
 }

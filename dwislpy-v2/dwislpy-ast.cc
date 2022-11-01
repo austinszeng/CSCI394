@@ -108,6 +108,12 @@ std::optional<Valu> Asgn::exec(const Defs& defs,
     return std::nullopt;
 }
 
+std::optional<Valu> PlEq::exec(const Defs& defs,
+                               Ctxt& ctxt) const {
+    ctxt[name] = expn->eval(defs,ctxt);
+    return std::nullopt;
+}
+
 std::optional<Valu> Pass::exec([[maybe_unused]] const Defs& defs,
                                [[maybe_unused]] Ctxt& ctxt) const {
     // does nothing!
@@ -324,6 +330,20 @@ void Asgn::output(std::ostream& os, std::string indent) const {
     os << std::endl;
 }
 
+void Pleq::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << name << " += ";
+    expn->output(os);
+    os << std::endl;
+}
+
+void Mneq::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << name << " -= ";
+    expn->output(os);
+    os << std::endl;
+}
+
 void Pass::output(std::ostream& os, std::string indent) const {
     os << indent << "pass" << std::endl;
 }
@@ -373,6 +393,22 @@ void IMod::output(std::ostream& os) const {
     os << "(";
     left->output(os);
     os << " % ";
+    rght->output(os);
+    os << ")";
+}
+
+void IAnd::output(std::ostream& os) const {
+    os << "(";
+    left->output(os);
+    os << " and ";
+    rght->output(os);
+    os << ")";
+}
+
+void IOr:output(std::ostream& os) const {
+    os << "(";
+    left->output(os);
+    os << " or ";
     rght->output(os);
     os << ")";
 }
@@ -452,6 +488,22 @@ void Asgn::dump(int level) const {
     expn->dump(level+1);
 }
 
+void Pleq::dump(int level) const {
+    dump_indent(level);
+    std::cout << "PLEQ" << std::endl;
+    dump_indent(level+1);
+    std::cout << name << std::endl;
+    expn->dump(level+1);
+}
+
+void Mneq::dump(int level) const {
+    dump_indent(level);
+    std::cout << "MNEQ" << std::endl;
+    dump_indent(level+1);
+    std::cout << name << std::endl;
+    expn->dump(level+1);
+}
+
 void Prnt::dump(int level) const {
     dump_indent(level);
     std::cout << "PRNT" << std::endl;
@@ -494,6 +546,20 @@ void IDiv::dump(int level) const {
 void IMod::dump(int level) const {
     dump_indent(level);
     std::cout << "IDIV" << std::endl;
+    left->dump(level+1);
+    rght->dump(level+1);
+}
+
+void IAnd::dump(int level) const {
+    dump_indent(level);
+    std::cout << "IAND" << std::endl;
+    left->dump(level+1);
+    rght->dump(level+1);
+}
+
+void IOr::dump(int level) const {
+    dump_indent(level);
+    std::cout << "IOR" << std::endl;
     left->dump(level+1);
     rght->dump(level+1);
 }
