@@ -389,6 +389,14 @@ WSPC    {INDT}
     return issue(token::Token_IDIV,yytext,loc);
 }
 
+<MID_LINE>"if" {
+    return issue(token::Token_IDIV,yytext,loc);
+}
+
+<MID_LINE>"while" {
+    return issue(token::Token_IDIV,yytext,loc);
+}
+
 <MID_LINE>"%" {
     return issue(token::Token_IMOD,yytext,loc);
 }
@@ -398,6 +406,22 @@ WSPC    {INDT}
 }
 
 <MID_LINE>or {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
+<MID_LINE>"<" {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
+<MID_LINE>"<=" {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
+<MID_LINE>"==" {
+    return issue(token::Token_IMOD,yytext,loc);
+}
+
+<MID_LINE>not {
     return issue(token::Token_IMOD,yytext,loc);
 }
 

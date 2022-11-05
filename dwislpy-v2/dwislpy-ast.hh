@@ -31,6 +31,7 @@
 #include <utility>
 #include <iostream>
 #include <variant>
+#include <optional>
 #include "dwislpy-util.hh"
 
 // Valu
@@ -52,8 +53,10 @@ class Stmt;
 class Pass;
 class Asgn;
 class Prnt;
-class Pleq;
-class Mneq;
+class PlEq;
+class MnEq;
+class IfSt;
+class Whle;
 //
 class Expn;
 class Plus;
@@ -63,6 +66,7 @@ class IDiv;
 class IMod;
 class IAnd;
 class IOr;
+class INot;
 class Less;
 class LsEq;
 class Equl;
@@ -91,13 +95,18 @@ typedef std::shared_ptr<IDiv> IDiv_ptr;
 typedef std::shared_ptr<IMod> IMod_ptr;
 typedef std::shared_ptr<IAnd> IAnd_ptr;
 typedef std::shared_ptr<IOr> IOr_ptr;
-//
+typedef std::shared_ptr<INot> INot_ptr;
+typedef std::shared_ptr<Less> Less_ptr;
+typedef std::shared_ptr<LsEq> LsEq_ptr;
+typedef std::shared_ptr<Equl> Equl_ptr;
+// 
 typedef std::shared_ptr<Pass> Pass_ptr; 
 typedef std::shared_ptr<Prnt> Prnt_ptr; 
 typedef std::shared_ptr<Asgn> Asgn_ptr;
-typedef std::shared_ptr<Pleq> Pleq_ptr;
-typedef std::shared_ptr<Mneq> Mneq_ptr;
-
+typedef std::shared_ptr<PlEq> PlEq_ptr;
+typedef std::shared_ptr<MnEq> MnEq_ptr;
+typedef std::shared_ptr<IfSt> IfSt_ptr;
+typedef std::shared_ptr<Whle> Whle_ptr;
 //
 typedef std::shared_ptr<Prgm> Prgm_ptr; 
 typedef std::shared_ptr<Defn> Defn_ptr; 
@@ -232,34 +241,6 @@ public:
 };
 
 //
-// PlEq - += statement AST Node
-//
-class Pleq : public Stmt {
-public:
-    Name     name;
-    Expn_ptr expn;
-    Asgn(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
-    virtual ~Asgn(void) = default;
-    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
-    virtual void output(std::ostream& os, std::string indent) const;
-    virtual void dump(int level = 0) const;
-};
-
-//
-// MnEq - -= statement AST Node
-//
-class Mneq : public Stmt {
-public:
-    Name     name;
-    Expn_ptr expn;
-    Asgn(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
-    virtual ~Asgn(void) = default;
-    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
-    virtual void output(std::ostream& os, std::string indent) const;
-    virtual void dump(int level = 0) const;
-};
-
-//
 // Prnt - print statement AST node
 //
 class Prnt : public Stmt {
@@ -284,6 +265,61 @@ public:
     virtual void output(std::ostream& os, std::string indent) const;
     virtual void dump(int level = 0) const;
 };
+
+//
+// PlEq - += statement AST Node
+//
+class PlEq : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    PlEq(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~PlEq(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// MnEq - -= statement AST Node
+//
+class MnEq : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    MnEq(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~MnEq(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// IfSt - if statement AST Node
+//
+class IfSt : public Stmt {
+public:
+    Expn_ptr expn;
+    IfSt(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+    virtual ~IfSt(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// Whle - while statement AST Node
+//
+class Whle : public Stmt {
+public:
+    Expn_ptr expn;
+    Whle(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+    virtual ~Whle(void) = default;
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
 
 //
 // class Blck
@@ -431,6 +467,64 @@ public:
     IOr(Expn_ptr lf, Expn_ptr rg, Locn lo)
         : Expn {lo}, left {lf}, rght {rg} { }
     virtual ~IOr(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// Less - < comparison operation's AST node
+//
+class Less : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    Less(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : Expn {lo}, left {lf}, rght {rg} { }
+    virtual ~Less(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// LsEq - <= comparison operation's AST node
+//
+class LsEq : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    LsEq(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : Expn {lo}, left {lf}, rght {rg} { }
+    virtual ~LsEq(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// Equl - == comparison operation's AST node
+//
+class Equl : public Expn {
+public:
+    Expn_ptr left;
+    Expn_ptr rght;
+    Equl(Expn_ptr lf, Expn_ptr rg, Locn lo)
+        : Expn {lo}, left {lf}, rght {rg} { }
+    virtual ~Equl(void) = default;
+    virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
+    virtual void output(std::ostream& os) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// INot - not logical operation's AST node
+//
+class INot : public Expn {
+public:
+    Expn_ptr expn;
+    INot(Expn_ptr e, Locn lo) : Expn {lo}, expn {e} { }
+    virtual ~INot(void) = default;
     virtual Valu eval(const Defs& defs, const Ctxt& ctxt) const;
     virtual void output(std::ostream& os) const;
     virtual void dump(int level = 0) const;
