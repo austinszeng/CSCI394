@@ -364,6 +364,10 @@ WSPC    {INDT}
 <MID_LINE>")" {
     return issue(token::Token_RPAR,yytext,loc);
 }
+
+<MID_LINE>":" {
+    return issue(token::Token_COLN,yytext,loc);
+}
      
 <MID_LINE>"+" {
     return issue(token::Token_PLUS,yytext,loc);
@@ -382,19 +386,19 @@ WSPC    {INDT}
 }
 
 <MID_LINE>"+=" {
-    return issue(token::Token_IDIV,yytext,loc);
+    return issue(token::Token_PLEQ,yytext,loc);
 }
 
 <MID_LINE>"-=" {
-    return issue(token::Token_IDIV,yytext,loc);
+    return issue(token::Token_MNEQ,yytext,loc);
 }
 
-<MID_LINE>"if" {
-    return issue(token::Token_IDIV,yytext,loc);
+<MID_LINE>if {
+    return issue(token::Token_IFST,yytext,loc);
 }
 
-<MID_LINE>"while" {
-    return issue(token::Token_IDIV,yytext,loc);
+<MID_LINE>while {
+    return issue(token::Token_WHLE,yytext,loc);
 }
 
 <MID_LINE>"%" {
@@ -402,27 +406,27 @@ WSPC    {INDT}
 }
     
 <MID_LINE>and {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_IAND,yytext,loc);
 }
 
 <MID_LINE>or {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_IOR,yytext,loc);
 }
 
 <MID_LINE>"<" {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_LESS,yytext,loc);
 }
 
 <MID_LINE>"<=" {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_LSEQ,yytext,loc);
 }
 
 <MID_LINE>"==" {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_EQUL,yytext,loc);
 }
 
 <MID_LINE>not {
-    return issue(token::Token_IMOD,yytext,loc);
+    return issue(token::Token_INOT,yytext,loc);
 }
 
 <MID_LINE>print {

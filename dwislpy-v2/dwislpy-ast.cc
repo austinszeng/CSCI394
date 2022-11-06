@@ -121,46 +121,42 @@ std::optional<Valu> Prnt::exec(const Defs& defs, Ctxt& ctxt) const {
 
 std::optional<Valu> PlEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    // exp = expn->eval(defs,ctxt);
-    // if (std::holds_alternative<int>(exp) && ctxt[name] check type?)
     // ctxt[name] = ctxt[name] + expn->eval(defs,ctxt);
-    // if ()
-    // return std::nullopt;
-    // Valu exp = expn->eval(defs,ctxt);
-    // ctxt[name] = ctxt[name] + exp;
-    // Valu exp = expn->eval(defs,ctxt);
-    // if (std::holds_alternative<int>(exp)) {
-    //     int exp = std::get<int>(exp);
-    //     ctxt[name] = Valu {ctxt[name] + exp};
-    //     return std::nullopt;
-    // } else if (std::holds_alternative<std::string>(exp)) {
-    //     std::string exp = std::get<std::string>(exp);
-    //     ctxt[name] = Valu {ctxt[name] + exp};
-    //     return std::nullopt;
-    // } else {
-    //     std::string msg = "Run-time error: wrong operand type for plus.";
-    //     throw DwislpyError { where(), msg };
-    // }        
+    return std::nullopt;
 }
 
 std::optional<Valu> MnEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    ctxt[name] = ctxt[valu] - expn->eval(defs,ctxt);
+    // ctxt[name] = ctxt[name] - expn->eval(defs,ctxt);
     return std::nullopt;
 }
 
 // 8. Since a return might occur within a sub-block, you need to pay attention to the result of your recursive call to Blck::exec.
-// std::optional<Valu> IfSt::exec(const Defs& defs,
-//                                Ctxt& ctxt) const {
-//     ctxt[name] = expn->eval(defs,ctxt);
-//     return std::nullopt;
-// }
+std::optional<Valu> IfSt::exec(const Defs& defs,
+                               Ctxt& ctxt) const {
+    Valu v = expn->eval(defs,ctxt);
+    if (std::holds_alternative<bool>(v)) {
+        bool vl = std::get<bool>(v);
+        return Valu {vl}; 
+    } else {
+        std::string msg = "Run-time error: wrong operand type for if.";
+        throw DwislpyError { where(), msg };
+    } 
+    return std::nullopt;
+}
 
-// std::optional<Valu> Whle::exec(const Defs& defs,
-//                                Ctxt& ctxt) const {
-//     ctxt[name] = expn->eval(defs,ctxt);
-//     return std::nullopt;
-// }
+std::optional<Valu> Whle::exec(const Defs& defs,
+                               Ctxt& ctxt) const {
+    Valu v = expn->eval(defs,ctxt);
+    if (std::holds_alternative<bool>(v)) {
+        bool vl = std::get<bool>(v);
+        return Valu {vl}; 
+    } else {
+        std::string msg = "Run-time error: wrong operand type for while.";
+        throw DwislpyError { where(), msg };
+    } 
+    return std::nullopt;
+}
 
 
 //
@@ -226,7 +222,7 @@ Valu IDiv::eval(const Defs& defs, const Ctxt& ctxt) const {
         int ln = std::get<int>(lv);
         int rn = std::get<int>(rv);
         if (rn == 0) {
-            throw DwislpyError { where(), "Run-time error: division by 0."};
+            throw DwislpyError { where(), "Run-time error: division by 0 (idiv)."};
         } else {
             return Valu {ln / rn};
         } 
@@ -244,7 +240,7 @@ Valu IMod::eval(const Defs& defs, const Ctxt& ctxt) const {
         int ln = std::get<int>(lv);
         int rn = std::get<int>(rv);
         if (rn == 0) {
-            throw DwislpyError { where(), "Run-time error: division by 0."};
+            throw DwislpyError { where(), "Run-time error: division by 0 (imod)."};
         } else {
             return Valu {ln % rn};
         } 
@@ -254,119 +250,118 @@ Valu IMod::eval(const Defs& defs, const Ctxt& ctxt) const {
     }        
 }
 
-// Valu IAnd::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu lv = left->eval(defs,ctxt);
-//     Valu rv = rght->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(lv)
-//         && std::holds_alternative<int>(rv)) {
-//         int ln = std::get<int>(lv);
-//         int rn = std::get<int>(rv);
-//         return Valu {ln && rn};
-//     } else if (std::holds_alternative<std::string>(lv)
-//                && std::holds_alternative<std::string>(rv)) {
-//         std::string ls = std::get<std::string>(lv);
-//         std::string rs = std::get<std::string>(rv);
-//         return Valu {ls && rs};   
-//     } else {
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }        
-// }
+Valu IAnd::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu lv = left->eval(defs,ctxt);
+    Valu rv = rght->eval(defs,ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        return Valu {ln && rn};
+    } else if (std::holds_alternative<bool>(lv)
+               && std::holds_alternative<bool>(rv)) {
+        bool ls = std::get<bool>(lv);
+        bool rs = std::get<bool>(rv);
+        return Valu {ls && rs};   
+    } else {
+        std::string msg = "Run-time error: wrong operand type for and.";
+        throw DwislpyError { where(), msg };
+    }        
+}
 
-// Valu IOr::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu lv = left->eval(defs,ctxt);
-//     Valu rv = rght->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(lv)
-//         && std::holds_alternative<int>(rv)) {
-//         int ln = std::get<int>(lv);
-//         int rn = std::get<int>(rv);
-//         return Valu {ln || rn};
-//     } else if (std::holds_alternative<std::string>(lv)
-//                && std::holds_alternative<std::string>(rv)) {
-//         std::string ls = std::get<std::string>(lv);
-//         std::string rs = std::get<std::string>(rv);
-//         return Valu {ls || rs};  
-//     } else {
-//         // Exercise: make this work for (int,str) and (str,int).
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }          
-// }
+Valu IOr::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu lv = left->eval(defs,ctxt);
+    Valu rv = rght->eval(defs,ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        return Valu {ln || rn};
+    } else if (std::holds_alternative<bool>(lv)
+               && std::holds_alternative<bool>(rv)) {
+        bool ls = std::get<bool>(lv);
+        bool rs = std::get<bool>(rv);
+        return Valu {ls || rs};  
+    } else {
+        std::string msg = "Run-time error: wrong operand type for or.";
+        throw DwislpyError { where(), msg };
+    }          
+}
 
-// Valu Less::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu lv = left->eval(defs,ctxt);
-//     Valu rv = rght->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(lv)
-//         && std::holds_alternative<int>(rv)) {
-//         int ln = std::get<int>(lv);
-//         int rn = std::get<int>(rv);
-//         return Valu {ln < rn};
-//     } else if (std::holds_alternative<std::string>(lv)
-//                && std::holds_alternative<std::string>(rv)) {
-//         std::string ls = std::get<std::string>(lv);
-//         std::string rs = std::get<std::string>(rv);
-//         return Valu {ls < rs};  
-//     } else {
-//         // Exercise: make this work for (int,str) and (str,int).
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }          
-// }
+Valu Less::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu lv = left->eval(defs,ctxt);
+    Valu rv = rght->eval(defs,ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        return Valu {ln < rn};
+    } else if (std::holds_alternative<bool>(lv)
+               && std::holds_alternative<bool>(rv)) {
+        bool ls = std::get<bool>(lv);
+        bool rs = std::get<bool>(rv);
+        return Valu {ls < rs};  
+    } else {
+        // Exercise: make this work for (int,str) and (str,int).
+        std::string msg = "Run-time error: wrong operand type for <.";
+        throw DwislpyError { where(), msg };
+    }          
+}
 
-// Valu LsEq::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu lv = left->eval(defs,ctxt);
-//     Valu rv = rght->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(lv)
-//         && std::holds_alternative<int>(rv)) {
-//         int ln = std::get<int>(lv);
-//         int rn = std::get<int>(rv);
-//         return Valu {ln <= rn};
-//     } else if (std::holds_alternative<std::string>(lv)
-//                && std::holds_alternative<std::string>(rv)) {
-//         std::string ls = std::get<std::string>(lv);
-//         std::string rs = std::get<std::string>(rv);
-//         return Valu {ls <= rs};  
-//     } else {
-//         // Exercise: make this work for (int,str) and (str,int).
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }              
-// }
+Valu LsEq::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu lv = left->eval(defs,ctxt);
+    Valu rv = rght->eval(defs,ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        return Valu {ln <= rn};
+    } else if (std::holds_alternative<std::string>(lv)
+               && std::holds_alternative<std::string>(rv)) {
+        std::string ls = std::get<std::string>(lv);
+        std::string rs = std::get<std::string>(rv);
+        return Valu {ls <= rs};  
+    } else {
+        // Exercise: make this work for (int,str) and (str,int).
+        std::string msg = "Run-time error: wrong operand type for <=.";
+        throw DwislpyError { where(), msg };
+    }              
+}
 
-// Valu Equl::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu lv = left->eval(defs,ctxt);
-//     Valu rv = rght->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(lv)
-//         && std::holds_alternative<int>(rv)) {
-//         int ln = std::get<int>(lv);
-//         int rn = std::get<int>(rv);
-//         return Valu {ln == rn};
-//     } else if (std::holds_alternative<std::string>(lv)
-//                && std::holds_alternative<std::string>(rv)) {
-//         std::string ls = std::get<std::string>(lv);
-//         std::string rs = std::get<std::string>(rv);
-//         return Valu {ls == rs};  
-//     } else {
-//         // Exercise: make this work for (int,str) and (str,int).
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }         
-// }
+Valu Equl::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu lv = left->eval(defs,ctxt);
+    Valu rv = rght->eval(defs,ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        return Valu {ln == rn};
+    } else if (std::holds_alternative<std::string>(lv)
+               && std::holds_alternative<std::string>(rv)) {
+        std::string ls = std::get<std::string>(lv);
+        std::string rs = std::get<std::string>(rv);
+        return Valu {ls == rs};  
+    } else {
+        // Exercise: make this work for (int,str) and (str,int).
+        std::string msg = "Run-time error: wrong operand type for ==.";
+        throw DwislpyError { where(), msg };
+    }         
+}
 
-// Valu INot::eval(const Defs& defs, const Ctxt& ctxt) const {
-//     Valu v = expn->eval(defs,ctxt);
-//     if (std::holds_alternative<int>(v)) {
-//         int v = std::get<int>(v);
-//         return Valu {!v};
-//     } else if (std::holds_alternative<string>(v)) {
-//         std::string v = std::get<std::string>(v);
-//         return Valu {!v}; 
-//     } else {
-//         // Exercise: make this work for (int,str) and (str,int).
-//         std::string msg = "Run-time error: wrong operand type for times.";
-//         throw DwislpyError { where(), msg };
-//     }       
-// }
+Valu INot::eval(const Defs& defs, const Ctxt& ctxt) const {
+    Valu v = expn->eval(defs,ctxt);
+    if (std::holds_alternative<int>(v)) {
+        int vl = std::get<int>(v);
+        return Valu {!vl};
+    } else if (std::holds_alternative<bool>(v)) {
+        bool vl = std::get<bool>(v);
+        return Valu {!vl}; 
+    } else {
+        // Exercise: make this work for (int,str) and (str,int).
+        std::string msg = "Run-time error: wrong operand type for not.";
+        throw DwislpyError { where(), msg };
+    }       
+}
 
 Valu Ltrl::eval([[maybe_unused]] const Defs& defs,
                 [[maybe_unused]] const Ctxt& ctxt) const {

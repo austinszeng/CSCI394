@@ -67,6 +67,7 @@
 %token               INOT "not"
 %token               LPAR "(" 
 %token               RPAR ")"
+%token               COLN ":"
 %token               NONE "None"
 %token               TRUE "True"
 %token               FALS "False"
@@ -140,10 +141,10 @@ stmt:
 | NAME MNEQ expn EOLN {
       $$ = MnEq_ptr { new MnEq {$1,$3,lexer.locate(@2)} };
   }
-| IFST expn EOLN {
+| IFST expn COLN EOLN {
       $$ = IfSt_ptr { new IfSt {$2, lexer.locate(@1)} };
   }
-| WHLE expn EOLN {
+| WHLE expn COLN EOLN INDT {
       $$ = Whle_ptr { new Whle {$2, lexer.locate(@1)} };
   }
 | PASS EOLN {

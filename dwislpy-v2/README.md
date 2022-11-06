@@ -1,2 +1,4 @@
-mimic Asgn functions for ast.cc
-ctxt[name] + expn->eval(defs.ctxt) for +=
+# Homework 3: DWISLPY
+## To-do
+- while token specifics
+    - probably need regular expression to ...
