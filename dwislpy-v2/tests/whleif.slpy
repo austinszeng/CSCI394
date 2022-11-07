@@ -1,0 +1,8 @@
+i = 0
+while i < 2:
+    if i == 1:
+        print("I hit 1")
+    else:
+        print(i)
+    i = i + 1
+print(i)

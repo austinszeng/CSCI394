@@ -300,7 +300,9 @@ public:
 class IfSt : public Stmt {
 public:
     Expn_ptr expn;
-    IfSt(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+    Blck_ptr if_blck;
+    Blck_ptr else_blck;
+    IfSt(Expn_ptr e, Locn l, Blck_ptr b1, Blck_ptr b2) : Stmt {l}, expn {e}, if_blck {b1}, else_blck {b2} { }
     virtual ~IfSt(void) = default;
     virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
     virtual void output(std::ostream& os, std::string indent) const;
@@ -313,7 +315,8 @@ public:
 class Whle : public Stmt {
 public:
     Expn_ptr expn;
-    Whle(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+    Blck_ptr wh_blck;
+    Whle(Expn_ptr e, Locn l, Blck_ptr b) : Stmt {l}, expn {e}, wh_blck {b} { }
     virtual ~Whle(void) = default;
     virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
     virtual void output(std::ostream& os, std::string indent) const;

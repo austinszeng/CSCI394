@@ -368,6 +368,10 @@ WSPC    {INDT}
 <MID_LINE>":" {
     return issue(token::Token_COLN,yytext,loc);
 }
+
+<MID_LINE>else {
+    return issue(token::Token_ELSE,yytext,loc);
+}
      
 <MID_LINE>"+" {
     return issue(token::Token_PLUS,yytext,loc);

@@ -1,0 +1,16 @@
+x = 1
+if x == 1:
+    print("True")
+    print("1")
+    if x == 1:
+        print("1")
+    else:
+        print("0")
+else:
+    print("False")
+
+if x == 0:
+    print("True")
+else:
+    print("False")
+x=1

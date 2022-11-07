@@ -53,6 +53,7 @@
 %token               PLEQ "+="
 %token               MNEQ "-="
 %token               IFST "if"
+%token               ELSE "else"
 %token               WHLE "while"
 %token               PLUS "+"
 %token               MNUS "-"
@@ -141,11 +142,17 @@ stmt:
 | NAME MNEQ expn EOLN {
       $$ = MnEq_ptr { new MnEq {$1,$3,lexer.locate(@2)} };
   }
-| IFST expn COLN EOLN {
-      $$ = IfSt_ptr { new IfSt {$2, lexer.locate(@1)} };
+| IFST expn COLN EOLN INDT blck DEDT ELSE COLN EOLN INDT blck DEDT {
+      $$ = IfSt_ptr { new IfSt {$2, lexer.locate(@1), $6, $12} };
   }
-| WHLE expn COLN EOLN INDT {
-      $$ = Whle_ptr { new Whle {$2, lexer.locate(@1)} };
+| IFST expn COLN EOLN INDT blck DEDT ELSE COLN EOLN INDT blck EOFL {
+      $$ = IfSt_ptr { new IfSt {$2, lexer.locate(@1), $6, $12} };
+  }
+| WHLE expn COLN EOLN INDT blck DEDT {
+      $$ = Whle_ptr { new Whle {$2, lexer.locate(@1), $6} };
+  }
+| WHLE expn COLN EOLN INDT blck EOFL {
+      $$ = Whle_ptr { new Whle {$2, lexer.locate(@1), $6} };
   }
 | PASS EOLN {
       $$ = Pass_ptr { new Pass {lexer.locate(@1)} };

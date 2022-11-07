@@ -121,13 +121,13 @@ std::optional<Valu> Prnt::exec(const Defs& defs, Ctxt& ctxt) const {
 
 std::optional<Valu> PlEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    // ctxt[name] = ctxt[name] + expn->eval(defs,ctxt);
+    ctxt[name] = ctxt[name] + expn->eval(defs,ctxt);
     return std::nullopt;
 }
 
 std::optional<Valu> MnEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    // ctxt[name] = ctxt[name] - expn->eval(defs,ctxt);
+    ctxt[name] = ctxt[name] - expn->eval(defs,ctxt);
     return std::nullopt;
 }
 
@@ -137,7 +137,11 @@ std::optional<Valu> IfSt::exec(const Defs& defs,
     Valu v = expn->eval(defs,ctxt);
     if (std::holds_alternative<bool>(v)) {
         bool vl = std::get<bool>(v);
-        return Valu {vl}; 
+        if (vl == true) {
+            return if_blck->exec(defs, ctxt);
+        } else {
+            return else_blck->exec(defs, ctxt);
+        }
     } else {
         std::string msg = "Run-time error: wrong operand type for if.";
         throw DwislpyError { where(), msg };
@@ -150,7 +154,13 @@ std::optional<Valu> Whle::exec(const Defs& defs,
     Valu v = expn->eval(defs,ctxt);
     if (std::holds_alternative<bool>(v)) {
         bool vl = std::get<bool>(v);
-        return Valu {vl}; 
+        while (vl) {
+            // Evaluate blck
+            wh_blck->exec(defs, ctxt);
+            // Check if conditional for while statement is still true
+            v = expn->eval(defs,ctxt);
+            vl = std::get<bool>(v);
+        }
     } else {
         std::string msg = "Run-time error: wrong operand type for while.";
         throw DwislpyError { where(), msg };
