@@ -121,14 +121,48 @@ std::optional<Valu> Prnt::exec(const Defs& defs, Ctxt& ctxt) const {
 
 std::optional<Valu> PlEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    ctxt[name] = ctxt[name] + expn->eval(defs,ctxt);
-    return std::nullopt;
+    // Make sure ctxt has name in it
+    if (ctxt.count(name) == 0) {
+        std::string msg = "Run-time error: uninitialized variable for +=.";
+        throw DwislpyError { where(), msg }; } 
+    Valu lv = ctxt[name];
+    Valu rv = expn->eval(defs, ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        ctxt[name] = Valu {ln + rn};
+        return std::nullopt;
+    } else if (std::holds_alternative<std::string>(lv)
+               && std::holds_alternative<std::string>(rv)) {
+        std::string ls = std::get<std::string>(lv);
+        std::string rs = std::get<std::string>(rv);
+        ctxt[name] = Valu {ls + rs};
+        return std::nullopt;
+    } else {
+        std::string msg = "Run-time error: wrong operand type for +=.";
+        throw DwislpyError { where(), msg };
+    }
 }
 
 std::optional<Valu> MnEq::exec(const Defs& defs,
                                Ctxt& ctxt) const {
-    ctxt[name] = ctxt[name] - expn->eval(defs,ctxt);
-    return std::nullopt;
+    // Make sure ctxt has name in it
+    if (ctxt.count(name) == 0) {
+        std::string msg = "Run-time error: uninitialized variable for -=.";
+        throw DwislpyError { where(), msg }; } 
+    Valu lv = ctxt[name];
+    Valu rv = expn->eval(defs, ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        ctxt[name] = Valu {ln - rn};
+        return std::nullopt;
+    } else {
+        std::string msg = "Run-time error: wrong operand type for +=.";
+        throw DwislpyError { where(), msg };
+    }
 }
 
 // 8. Since a return might occur within a sub-block, you need to pay attention to the result of your recursive call to Blck::exec.

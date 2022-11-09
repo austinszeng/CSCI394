@@ -4,3 +4,9 @@ x += 1
 print(x)
 x -= 1
 print(x)
+
+y = "string"
+y += "string"
+print(y)
+
+z += 1
