@@ -405,6 +405,10 @@ WSPC    {INDT}
     return issue(token::Token_WHLE,yytext,loc);
 }
 
+<MID_LINE>return {
+    return issue(token::Token_RTRN,yytext,loc);
+}
+
 <MID_LINE>"%" {
     return issue(token::Token_IMOD,yytext,loc);
 }

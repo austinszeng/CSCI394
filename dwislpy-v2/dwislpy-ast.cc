@@ -551,7 +551,6 @@ void MnEq::output(std::ostream& os, std::string indent) const {
     os << std::endl;
 }
 
-// Test 
 void IfSt::output(std::ostream& os, std::string indent) const {
     os << indent;
     os << "if ";
@@ -559,10 +558,16 @@ void IfSt::output(std::ostream& os, std::string indent) const {
     os << std::endl;
 }
 
-// Test
 void Whle::output(std::ostream& os, std::string indent) const {
     os << indent;
     os << "while ";
+    expn->output(os);
+    os << std::endl;
+}
+
+void Rtrn::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << "return ";
     expn->output(os);
     os << std::endl;
 }
@@ -767,6 +772,12 @@ void IfSt::dump(int level) const {
 void Whle::dump(int level) const {
     dump_indent(level);
     std::cout << "WHLE" << std::endl;
+    expn->dump(level+1);
+}
+
+void Rtrn::dump(int level) const {
+    dump_indent(level);
+    std::cout << "RTRN" << std::endl;
     expn->dump(level+1);
 }
 

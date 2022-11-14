@@ -57,6 +57,7 @@ class PlEq;
 class MnEq;
 class IfSt;
 class Whle;
+class Rtrn;
 //
 class Expn;
 class Plus;
@@ -107,6 +108,7 @@ typedef std::shared_ptr<PlEq> PlEq_ptr;
 typedef std::shared_ptr<MnEq> MnEq_ptr;
 typedef std::shared_ptr<IfSt> IfSt_ptr;
 typedef std::shared_ptr<Whle> Whle_ptr;
+typedef std::shared_ptr<Rtrn> Rtrn_ptr;
 //
 typedef std::shared_ptr<Prgm> Prgm_ptr; 
 typedef std::shared_ptr<Defn> Defn_ptr; 
@@ -319,6 +321,18 @@ public:
     Whle(Expn_ptr e, Locn l, Blck_ptr b) : Stmt {l}, expn {e}, wh_blck {b} { }
     virtual ~Whle(void) = default;
     virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// Rtrn - return statement AST Node
+//
+class Rtrn : public Stmt {
+public:
+    Expn_ptr expn;
+    Rtrn(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+    virtual ~Rtrn(void) = default;
     virtual void output(std::ostream& os, std::string indent) const;
     virtual void dump(int level = 0) const;
 };
