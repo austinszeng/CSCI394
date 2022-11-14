@@ -325,17 +325,17 @@ public:
     virtual void dump(int level = 0) const;
 };
 
-//
-// Rtrn - return statement AST Node
-//
-class Rtrn : public Stmt {
-public:
-    Expn_ptr expn;
-    Rtrn(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
-    virtual ~Rtrn(void) = default;
-    virtual void output(std::ostream& os, std::string indent) const;
-    virtual void dump(int level = 0) const;
-};
+// //
+// // Rtrn - return statement AST Node
+// //
+// class Rtrn : public Stmt {
+// public:
+//     Expn_ptr expn;
+//     Rtrn(Expn_ptr e, Locn l) : Stmt {l}, expn {e} { }
+//     virtual ~Rtrn(void) = default;
+//     virtual void output(std::ostream& os, std::string indent) const;
+//     virtual void dump(int level = 0) const;
+// };
 
 
 //

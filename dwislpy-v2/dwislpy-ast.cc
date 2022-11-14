@@ -565,12 +565,12 @@ void Whle::output(std::ostream& os, std::string indent) const {
     os << std::endl;
 }
 
-void Rtrn::output(std::ostream& os, std::string indent) const {
-    os << indent;
-    os << "return ";
-    expn->output(os);
-    os << std::endl;
-}
+// void Rtrn::output(std::ostream& os, std::string indent) const {
+//     os << indent;
+//     os << "return ";
+//     expn->output(os);
+//     os << std::endl;
+// }
 
 //////////////////////////  EXPN  /////////////////////////////
 
@@ -775,11 +775,11 @@ void Whle::dump(int level) const {
     expn->dump(level+1);
 }
 
-void Rtrn::dump(int level) const {
-    dump_indent(level);
-    std::cout << "RTRN" << std::endl;
-    expn->dump(level+1);
-}
+// void Rtrn::dump(int level) const {
+//     dump_indent(level);
+//     std::cout << "RTRN" << std::endl;
+//     expn->dump(level+1);
+// }
 
 void Plus::dump(int level) const {
     dump_indent(level);

@@ -55,7 +55,6 @@
 %token               IFST "if"
 %token               ELSE "else"
 %token               WHLE "while"
-%token               RTRN "return"
 %token               PLUS "+"
 %token               MNUS "-"
 %token               TMES "*"
@@ -154,9 +153,6 @@ stmt:
   }
 | WHLE expn COLN EOLN INDT blck EOFL {
       $$ = Whle_ptr { new Whle {$2, lexer.locate(@1), $6} };
-  }
-| RTRN expn EOLN {
-      $$ = Rtrn_ptr { new Rtrn {$2, lexer.locate(@1)} };
   }
 | PASS EOLN {
       $$ = Pass_ptr { new Pass {lexer.locate(@1)} };
