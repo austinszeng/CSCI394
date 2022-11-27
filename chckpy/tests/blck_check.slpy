@@ -1,0 +1,7 @@
+def g(x : int, z:int) -> int:
+    a : int = 5
+    return 3
+    b : int = 2
+
+y : int = 12
+print(g(y,3))
