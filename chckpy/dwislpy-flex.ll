@@ -433,6 +433,14 @@ WSPC    {INDT}
     return issue(token::Token_WHLE,yytext,loc);
 }
     
+<MID_LINE>"+=" {
+    return issue(token::Token_PLEQ,yytext,loc);
+}
+
+<MID_LINE>"-=" {
+    return issue(token::Token_MNEQ,yytext,loc);
+}
+
 <MID_LINE>if {
     return issue(token::Token_IFTN,yytext,loc);
 }

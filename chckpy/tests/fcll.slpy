@@ -6,3 +6,4 @@ def g(x : int, z : int) -> int:
 
 y : int = 12
 print(g(y,3))
+p : int = 5

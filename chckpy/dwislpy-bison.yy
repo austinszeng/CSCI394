@@ -56,6 +56,8 @@
 %token               AND  "and"
 %token               OR   "or"
 %token               NOT  "not"
+%token               PLEQ "+="
+%token               MNEQ "-="
 %token               IFTN "if"
 %token               ELSE "else"
 %token               WHLE "while"
@@ -95,6 +97,14 @@
 %%
 
 %start main;
+
+%left OR;
+%left AND;
+%left NOT;
+
+%nonassoc LESS;
+%nonassoc LSEQ;
+%nonassoc EQUL;
 
 %left PLUS MNUS;
 %left TMES IMOD IDIV;
@@ -210,6 +220,24 @@ stmt:
 | NAME ASGN expn EOLN {
       $$ = Asgn_ptr { new Asgn {$1,$3,lexer.locate(@2)} };
   }
+| NAME PLEQ expn EOLN {
+      $$ = PlEq_ptr { new PlEq {$1,$3,lexer.locate(@2)} };
+  }
+| NAME MNEQ expn EOLN {
+      $$ = MnEq_ptr { new MnEq {$1,$3,lexer.locate(@2)} };
+  }
+| IFTN expn COLN EOLN INDT blck DEDT ELSE COLN EOLN INDT blck DEDT {
+      $$ = IfEl_ptr { new IfEl {$2, $6, $12, lexer.locate(@1)} };
+  }
+| IFTN expn COLN EOLN INDT blck DEDT ELSE COLN EOLN INDT blck EOFL {
+      $$ = IfEl_ptr { new IfEl {$2, $6, $12, lexer.locate(@1)} };
+  }
+| WHLE expn COLN EOLN INDT blck DEDT {
+      $$ = Whle_ptr { new Whle {$2, $6, lexer.locate(@1)} };
+  }
+| WHLE expn COLN EOLN INDT blck EOFL {
+      $$ = Whle_ptr { new Whle {$2, $6, lexer.locate(@1)} };
+  }
 | PASS EOLN {
       $$ = Pass_ptr { new Pass {lexer.locate(@1)} };
   }
@@ -259,6 +287,24 @@ expn:
   }
 | expn IMOD expn {
       $$ = IMod_ptr { new IMod {$1,$3,lexer.locate(@2)} };
+  }
+| expn AND expn {
+      $$ = And_ptr { new And {$1,$3,lexer.locate(@2)} };
+  }
+| expn OR expn {
+      $$ = Or_ptr { new Or {$1,$3,lexer.locate(@2)} };
+  }
+| expn LESS expn {
+      $$ = Less_ptr { new Less {$1,$3,lexer.locate(@2)} };
+  }
+| expn LSEQ expn {
+      $$ = LsEq_ptr { new LsEq {$1,$3,lexer.locate(@2)} };
+  }
+| expn EQUL expn {
+      $$ = Equl_ptr { new Equl {$1,$3,lexer.locate(@2)} };
+  }
+| NOT expn {
+      $$ = Not_ptr { new Not {$2, lexer.locate(@1)} };
   }
 | NMBR {
       $$ = Ltrl_ptr { new Ltrl {Valu {$1},lexer.locate(@1)} };

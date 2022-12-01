@@ -59,6 +59,8 @@ class Prnt;
 class PCll;
 class PRtn;
 class FRtn;
+class PlEq;
+class MnEq;
 class IfEl;
 class Whle;
 //
@@ -113,6 +115,8 @@ typedef std::shared_ptr<Asgn> Asgn_ptr;
 typedef std::shared_ptr<PCll> PCll_ptr;
 typedef std::shared_ptr<PRtn> PRtn_ptr;
 typedef std::shared_ptr<FRtn> FRtn_ptr;
+typedef std::shared_ptr<PlEq> PlEq_ptr;
+typedef std::shared_ptr<MnEq> MnEq_ptr;
 typedef std::shared_ptr<IfEl> IfEl_ptr;
 typedef std::shared_ptr<Whle> Whle_ptr;
 //
@@ -276,6 +280,36 @@ public:
     Expn_ptr expn;
     Asgn(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
     virtual ~Asgn(void) = default;
+    virtual Rtns chck(Rtns expd, Defs& defs, SymT& symt);
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// PlEq - += statement AST Node
+//
+class PlEq : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    PlEq(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~PlEq(void) = default;
+    virtual Rtns chck(Rtns expd, Defs& defs, SymT& symt);
+    virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
+    virtual void output(std::ostream& os, std::string indent) const;
+    virtual void dump(int level = 0) const;
+};
+
+//
+// MnEq - -= statement AST Node
+//
+class MnEq : public Stmt {
+public:
+    Name     name;
+    Expn_ptr expn;
+    MnEq(Name x, Expn_ptr e, Locn l) : Stmt {l}, name {x}, expn {e} { }
+    virtual ~MnEq(void) = default;
     virtual Rtns chck(Rtns expd, Defs& defs, SymT& symt);
     virtual std::optional<Valu> exec(const Defs& defs, Ctxt& ctxt) const;
     virtual void output(std::ostream& os, std::string indent) const;

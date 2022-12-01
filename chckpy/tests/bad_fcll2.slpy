@@ -1,0 +1,8 @@
+def g(x : int, y : int) -> int:
+    y = x + 1
+    if y < 42:
+        return x
+    else:
+        print(x)
+
+print(g(2))

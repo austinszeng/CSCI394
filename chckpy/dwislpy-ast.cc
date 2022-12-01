@@ -166,6 +166,52 @@ std::optional<Valu> FRtn::exec(const Defs& defs, Ctxt& ctxt) const {
     return std::optional<Valu> { expn->eval(defs, ctxt) };
 }
 
+std::optional<Valu> PlEq::exec(const Defs& defs,
+                               Ctxt& ctxt) const {
+    // Make sure ctxt has name in it
+    if (ctxt.count(name) == 0) {
+        std::string msg = "Run-time error: uninitialized variable for +=.";
+        throw DwislpyError { where(), msg }; } 
+    Valu lv = ctxt[name];
+    Valu rv = expn->eval(defs, ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        ctxt[name] = Valu {ln + rn};
+        return std::nullopt;
+    } else if (std::holds_alternative<std::string>(lv)
+               && std::holds_alternative<std::string>(rv)) {
+        std::string ls = std::get<std::string>(lv);
+        std::string rs = std::get<std::string>(rv);
+        ctxt[name] = Valu {ls + rs};
+        return std::nullopt;
+    } else {
+        std::string msg = "Run-time error: wrong operand type for +=.";
+        throw DwislpyError { where(), msg };
+    }
+}
+
+std::optional<Valu> MnEq::exec(const Defs& defs,
+                               Ctxt& ctxt) const {
+    // Make sure ctxt has name in it
+    if (ctxt.count(name) == 0) {
+        std::string msg = "Run-time error: uninitialized variable for -=.";
+        throw DwislpyError { where(), msg }; } 
+    Valu lv = ctxt[name];
+    Valu rv = expn->eval(defs, ctxt);
+    if (std::holds_alternative<int>(lv)
+        && std::holds_alternative<int>(rv)) {
+        int ln = std::get<int>(lv);
+        int rn = std::get<int>(rv);
+        ctxt[name] = Valu {ln - rn};
+        return std::nullopt;
+    } else {
+        std::string msg = "Run-time error: wrong operand type for +=.";
+        throw DwislpyError { where(), msg };
+    }
+}
+
 std::optional<Valu> IfEl::exec(const Defs& defs, Ctxt& ctxt) const {
     Valu cond = cndn->eval(defs,ctxt);
     if (!std::holds_alternative<bool>(cond)) {
@@ -572,6 +618,20 @@ void Whle::output(std::ostream& os, std::string indent) const {
     blck->output(os,indent + "    ");
 }
 
+void PlEq::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << name << " += ";
+    expn->output(os);
+    os << std::endl;
+}
+
+void MnEq::output(std::ostream& os, std::string indent) const {
+    os << indent;
+    os << name << " -= ";
+    expn->output(os);
+    os << std::endl;
+}
+
 void IfEl::output(std::ostream& os, std::string indent) const {
     os << indent;
     os << "if ";
@@ -834,6 +894,22 @@ void PCll::dump(int level) const {
 void Pass::dump(int level) const {
     dump_indent(level);
     std::cout << "PASS" << std::endl;
+}
+
+void PlEq::dump(int level) const {
+    dump_indent(level);
+    std::cout << "PLEQ" << std::endl;
+    dump_indent(level+1);
+    std::cout << name << std::endl;
+    expn->dump(level+1);
+}
+
+void MnEq::dump(int level) const {
+    dump_indent(level);
+    std::cout << "MNEQ" << std::endl;
+    dump_indent(level+1);
+    std::cout << name << std::endl;
+    expn->dump(level+1);
 }
 
 void IfEl::dump(int level) const {

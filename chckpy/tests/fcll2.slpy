@@ -1,0 +1,7 @@
+def f(x : int) -> int:
+    x = x + 1
+    print(x)
+    pass
+    return x * 42
+
+print(f(2))
