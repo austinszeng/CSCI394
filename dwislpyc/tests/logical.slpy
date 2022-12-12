@@ -1,0 +1,8 @@
+print(True and False)
+print(True and True)
+print(not(1==1))
+print(not(1==0))
+print(False or False)
+print(False or True)
+print(True or True)
+print((5==5) or (5==4))

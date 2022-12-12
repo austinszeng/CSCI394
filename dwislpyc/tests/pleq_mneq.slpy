@@ -1,0 +1,10 @@
+x : int = 1
+print(x)
+x += 1
+print(x)
+x -= 1
+print(x)
+
+y : str = "string"
+y += "string"
+print(y)

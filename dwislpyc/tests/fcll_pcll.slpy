@@ -1,0 +1,22 @@
+def f(x : int) -> int:
+    x = x + 1
+    print(x)
+    pass
+    return x * 42
+
+def sqr(n : int) -> int :
+    return n * n
+
+def g(x : int, z : int):
+    a : int = 5
+    b : int = 2
+    c : int = 1
+    return
+
+print(f(2))
+
+a : int = 3
+print(sqr(a) + (sqr(a+1)))
+
+y : int = 12
+g(y,3)
